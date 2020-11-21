@@ -6,7 +6,6 @@
 
 <?php include 'common/top.php'; ?>
 
-<!-- Uploader --->
 
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -72,7 +71,7 @@
       <div class="form-row">
         <div class="col-md-4 mb-3">
           <label>Vehicle No :</label>
-          <input type="number" name="VehicleNo" id="VehicleNo" class="form-control" placeholder="Enter Vehicle No" maxlength="10" required>
+          <input type="text" name="VehicleNo" id="VehicleNo" class="form-control" placeholder="Enter Vehicle No" maxlength="11" required>
         </div>
         <div class="col-md-4 mb-3">
           <label>Vehicle Categorie :</label>
@@ -95,100 +94,27 @@
 
     if (isset($_POST['submit1'])) {
       require_once('connect.php');
-      // date_default_timezone_set('Asia/Colombo');
-      // $date = date('Y-m-d H:i:s');Vendor SiteID Type Band Site wp
-      //$date = $_POST['date'];
 
-      // --- Site details --
-      $SiteID = strtoupper($_POST['SiteID']);
-      $SiteName = ucwords($_POST['SiteName']);
+      date_default_timezone_set('Asia/Colombo');
+      $date = date('Y-m-d H:i:s');
 
-      // --- Invoice details --
-      $InvoiceNo = $_POST['InvoiceNo'];
-      $InvoiceDate = $_POST['InvoiceDate'];
-      $PaymentDate = $_POST['PaymentDate'];
+      $VehicleNo = $_POST['VehicleNo'];
+      $VehicleCategories = $_POST['VehicleCategories'];
       $Remark = $_POST['Remark'];
+      $vehicle_in = $date;
+      $vehicle_out = $date;
 
-      // --- litres details --
-      $SupplyDate = $_POST['SupplyDate'];
-      $StartingBalance = $_POST['StartingBalance'];
-      $LitresPumped = $_POST['LitresPumped'];
-      $CurrentMeter = $_POST['CurrentMeter'];
-      $Vendor = $_POST['Vendor'];
+      $check = mysqli_query($con, "SELECT * FROM `parking_details` WHERE `vehicle_no`='$VehicleNo' AND `vehicle_out` IS NULL");
+      $checkrows = mysqli_num_rows($check);
 
-      //$qry = "SELECT * FROM `total_geny_records` WHERE `siteID` = 'AMAKK1' ORDER BY id DESC LIMIT 1";
-      $qry = "SELECT * FROM `total_geny_records` WHERE `siteID` = '" . $SiteID . "' ORDER BY id DESC LIMIT 1";
-      $res = $con->query($qry);
-
-      if (mysqli_num_rows($res) == 1) {
-
-        while ($data1 = $res->fetch_assoc()) {
-          // --- Pre-Site details --
-          $PreSupplyDate = $data1['supplyDate'];
-          $PreStartingBalance = $data1['startingBalance'];
-          $PreLitresPumped = $data1['noLitresPumped'];
-          $PreCurrentMeter = $data1['currentMeter'];
-        }
-
-        // --- Calculation --
-        $DieselConsumption = ($PreStartingBalance + $PreLitresPumped) - $StartingBalance;
-        $RunningHours = $CurrentMeter - $PreCurrentMeter;
-        $ConsumptionLitHr = ($DieselConsumption / $RunningHours);
-        $AmountforDiesel = $LitresPumped * 95;
-        $LabourTransport = $LitresPumped * 31;
-        $total = $AmountforDiesel + $LabourTransport;
-        // $Runningdays = (round($PreSupplyDate - $SupplyDate) / (60 * 60 * 24));
-        $date1 = date_create($PreSupplyDate);
-        $date2 = date_create($SupplyDate);
-        $diff = date_diff($date1, $date2);
-        $Runningdays = $diff->format("%a");
-        $NBT = 00;
-        $VAT = 00;
-        $TPRate = $LabourTransport / $LitresPumped;
-        $active = '1';
-
-        $qry1 = "INSERT INTO `total_geny_records`(`siteID`, `siteName`, `supplyDate`, `startingBalance`, `noLitresPumped`, `currentMeter`, `previousSupplyDate`, `previousMeter`, `dieselConsumption`, `runningHours`, `consumptionLH`, `amountforDiesel`, `labourTransport`, `NBT`, `VAT`, `totalAmount`, `TPRate`, `runningDays`, `invoiceNo`, `invoiceDate`, `invoicePdDate`, `remark`,`vendor`,`active`) 
-        VALUES ('$SiteID','$SiteName ','$SupplyDate','$StartingBalance','$LitresPumped','$CurrentMeter','$PreSupplyDate','$PreCurrentMeter','$DieselConsumption','$RunningHours','$ConsumptionLitHr','$AmountforDiesel','$LabourTransport','$NBT','$VAT','$total','$TPRate','$Runningdays','$InvoiceNo','$InvoiceDate','$PaymentDate','$Remark','$Vendor','$active')";
-
-        // previousSupplyDate	previousMeter	dieselConsumption	runningHours	
-        // consumptionLH	amountforDiesel	labourTransport	NBT	VAT	totalAmount	TPRate
+      if ($checkrows > 0) {
+        echo "<div style='color: red;'>*Your record already Added.</div>";
+      } else {
+        $qry1 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories ','$Remark','$vehicle_in')";
         if (!mysqli_query($con, $qry1)) {
           die('Error: ' . mysqli_error());
-        } else {
-          echo "Your record added Successfull";
         }
-      } else {
-
-        // --- Pre-Site details --
-        $PreSupplyDate = '1st Time';
-        $PreStartingBalance = '1st Time';
-        $PreLitresPumped = '1st Time';
-        $PreCurrentMeter = '1st Time';
-
-
-        // --- Calculation --
-        $DieselConsumption = '1st Time';
-        $RunningHours = '1st Time';
-        $ConsumptionLitHr = '1st Time';
-        $AmountforDiesel = $LitresPumped * 95;
-        $LabourTransport = $LitresPumped * 31;
-        $total = $AmountforDiesel + $LabourTransport;
-        $Runningdays = '1st Time';
-        $NBT = 00;
-        $VAT = 00;
-        $TPRate = $LabourTransport / $LitresPumped;
-        $active = '1';
-
-        $qry2 = "INSERT INTO `total_geny_records`(`siteID`, `siteName`, `supplyDate`, `startingBalance`, `noLitresPumped`, `currentMeter`, `previousSupplyDate`, `previousMeter`, `dieselConsumption`, `runningHours`, `consumptionLH`, `amountforDiesel`, `labourTransport`, `NBT`, `VAT`, `totalAmount`, `TPRate`, `runningDays`, `invoiceNo`, `invoiceDate`, `invoicePdDate`, `remark`,`vendor`,`active`) 
-        VALUES ('$SiteID','$SiteName ','$SupplyDate','$StartingBalance','$LitresPumped','$CurrentMeter','$PreSupplyDate','$PreCurrentMeter','$DieselConsumption','$RunningHours','$ConsumptionLitHr','$AmountforDiesel','$LabourTransport','$NBT','$VAT','$total','$TPRate','$Runningdays','$InvoiceNo','$InvoiceDate','$PaymentDate','$Remark','$Vendor','$active')";
-
-        // previousSupplyDate	previousMeter	dieselConsumption	runningHours	
-        // consumptionLH	amountforDiesel	labourTransport	NBT	VAT	totalAmount	TPRate
-        if (!mysqli_query($con, $qry2)) {
-          die('Error: ' . mysqli_error());
-        } else {
-          echo "Your record added Successfull";
-        }
+        echo "Your record Added Successfully";
       }
     }
 
@@ -205,28 +131,55 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered" id="genytable" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Vehicle No</th>
-            <th>Vehicle Categorie</th>
-            <th>Remark</th>
-            <th>Vehicle IN Time</th>
-            <th>Vehicle EXIT</th>
-          </tr>
+      <?php
 
-        </thead>
-        <tfoot>
-          <tr>
-            <th>Vehicle No</th>
-            <th>Vehicle Categorie</th>
-            <th>Remark</th>
-            <th>Vehicle IN Time</th>
-            <th>Vehicle EXIT</th>
-          </tr>
-        </tfoot>
-      </table><br>
-      <!-- <p style="margin-bottom: 2px;text-align: right;">Delete Record Use &nbsp;&nbsp;<i class='fa fa-window-close' style='font-size:18px;color:red'></i></p> -->
+      require_once('connect.php');
+      $user = $_SESSION['user_name'];
+      $qry3 = "SELECT * FROM parking_details WHERE `vehicle_out` IS NULL";
+
+      echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+              <th>Vehicle No</th>
+              <th>Vehicle Categorie</th>
+              <th>Remark</th>
+              <th>Vehicle IN Time</th>
+              <th>Vehicle EXIT</th>
+            </tr>
+
+            </thead>
+            <tfoot>
+            <tr>
+              <th>Vehicle No</th>
+              <th>Vehicle Categorie</th>
+              <th>Remark</th>
+              <th>Vehicle IN Time</th>
+              <th>Vehicle EXIT</th>
+            </tr>
+            </tfoot>';
+
+      if ($res = $con->query($qry3)) {
+        while ($row = $res->fetch_assoc()) {
+          $id = $row["p_no"];
+          $field1name = $row["vehicle_no"];
+          $field2name = $row["vehicle_categorie"];
+          $field3name = $row["remark"];
+          $field4name = $row["vehicle_in"];
+
+          echo "<tr> 
+                  <td>" . $field1name . "</td> 
+                  <td>" . $field2name . "</td> 
+                  <td>" . $field3name . "</td> 
+                  <td>" . $field4name . "</td> 
+                  <td><a onClick=\"return confirm('Are you sure " . $row['vehicle_no'] . " Vehicle Exit?')\" href=\"vehicle_out.php?id=" . $row['p_no'] . "\"><button type='button' class='btn btn-secondary btn-xs'>Vehicle Exit</button></a>
+                  </td>
+                </tr>";
+        }
+
+        $res->free();
+      }
+      ?>
+      </table>
     </div>
   </div>
 </div>
@@ -238,41 +191,3 @@
 <!-- End of Main Content -->
 
 <?php include 'common/footer.php'; ?>
-
-
-<!--jQuary-->
-<script>
-  $(document).ready(function() {
-    var dataTable = $('#genytable').DataTable({
-      "processing": true,
-      "serverSide": true,
-      "ajax": {
-        url: "select.php",
-        type: "post"
-      }
-    });
-  });
-</script>
-
-<script>
-  $("#SiteID").autocomplete({
-    source: function(request, response) {
-      $.ajax({
-        url: "AutoComplete/SiteID.php",
-        type: 'post',
-        dataType: "json",
-        data: {
-          search: request.term
-        },
-        success: function(data) {
-          response(data);
-        }
-      });
-    },
-    select: function(event, ui) {
-      $('#SiteID').val(ui.item.value);
-      $('#SiteName').val(ui.item.label);
-      return false;
-    }
-  });
-</script>

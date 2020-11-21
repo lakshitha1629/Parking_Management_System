@@ -40,14 +40,15 @@
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Parking Spaces Request Count</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                    require_once('connect.php');
-                                                                    $date3 = date('Y-m-d');
-                                                                    $qry = "SELECT COUNT(`request`) as d FROM `total_geny_records` WHERE `request`='Pending..'";
+                                                                    // require_once('connect.php');
+                                                                    // $date3 = date('Y-m-d');
+                                                                    // $qry = "SELECT COUNT(`request`) as d FROM `total_geny_records` WHERE `request`='Pending..'";
 
-                                                                    $res = $con->query($qry);
-                                                                    while ($data1 = $res->fetch_assoc()) {
-                                                                      echo $data1['d'];
-                                                                    } ?></div>
+                                                                    // $res = $con->query($qry);
+                                                                    // while ($data1 = $res->fetch_assoc()) {
+                                                                    //   echo $data1['d'];
+                                                                    // }
+                                                                     ?></div>
               </div>
               <div class="col-auto">
                 <i class="fas fa-battery-quarter fa-2x text-gray-300"></i>
@@ -67,14 +68,15 @@
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Available Parking Spaces Count</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                    require_once('connect.php');
-                                                                    $date3 = date('Y-m-d');
-                                                                    $qry = "SELECT COUNT(`site_id`) as c FROM `standby_geny_list`";
+                                                                    // require_once('connect.php');
+                                                                    // $date3 = date('Y-m-d');
+                                                                    // $qry = "SELECT COUNT(`site_id`) as c FROM `standby_geny_list`";
 
-                                                                    $res = $con->query($qry);
-                                                                    while ($data1 = $res->fetch_assoc()) {
-                                                                      echo $data1['c'];
-                                                                    } ?></div>
+                                                                    // $res = $con->query($qry);
+                                                                    // while ($data1 = $res->fetch_assoc()) {
+                                                                    //   echo $data1['c'];
+                                                                    // }
+                                                                     ?></div>
               </div>
               <div class="col-auto">
                 <i class="fas fa-battery-full fa-2x text-gray-300"></i>
@@ -94,14 +96,14 @@
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Last Month Income</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                  require_once('connect.php');
-                                                                  $date3 = date('Y-m-d');
-                                                                  $qry = "SELECT COUNT(`site_id`) as d FROM `standby_geny_list`";
+                                                                  // require_once('connect.php');
+                                                                  // $date3 = date('Y-m-d');
+                                                                  // $qry = "SELECT COUNT(`site_id`) as d FROM `standby_geny_list`";
 
-                                                                  $res = $con->query($qry);
-                                                                  while ($data1 = $res->fetch_assoc()) {
-                                                                    echo 'Rs. ' . $data1['d'];
-                                                                  }
+                                                                  // $res = $con->query($qry);
+                                                                  // while ($data1 = $res->fetch_assoc()) {
+                                                                  //   echo 'Rs. ' . $data1['d'];
+                                                                  // }
                                                                   ?></div>
             </div>
             <div class="col-auto">

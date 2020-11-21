@@ -2,7 +2,7 @@
 $hostname = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'genyhrs';
+$dbname = 'pms_db';
 
 $con = new mysqli($hostname,$username,$password,$dbname);
 

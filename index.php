@@ -28,10 +28,10 @@
                     </span>
 
 
-                    <div class="wrap-input100 validate-input" data-validate="Valid username is required">
-                        <input class="input100" type="text" id="txt_uname" name="Username">
+                    <div class="wrap-input100 validate-input" data-validate="Valid Email is required">
+                        <input class="input100" type="email" id="txt_uname" name="Email">
                         <span class="focus-input100"></span>
-                        <span class="label-input100">Enter Username</span>
+                        <span class="label-input100">Enter Email Address</span>
                     </div>
 
 
@@ -78,17 +78,17 @@
                         function login()
                         {
                             //  require_once ('connect.php');
-                            global $con, $username;
-                            // grap form valuese($_POST['username']);
-                            $username = e($_POST['Username']);
+                            global $con, $email;
+                            // grap form valuese($_POST['Email']);
+                            $email = e($_POST['Email']);
                             $password = e($_POST['password']);
 
                             // attempt login if no errors on form
 
                             $password = md5($password);
 
-                            //$query = "SELECT * FROM users WHERE username='$username' AND password='$password' LIMIT 1";
-                            $query = "SELECT * FROM `user_account` WHERE `user_name`='$username' AND `password`='$password' AND `activated`='1' LIMIT 1";
+                            //$query = "SELECT * FROM users WHERE email='$email' AND password='$password' LIMIT 1";
+                            $query = "SELECT * FROM `user_account` WHERE `email`='$email' AND `password`='$password' AND `activated`='1' LIMIT 1";
                             $results = mysqli_query($con, $query);
 
 
@@ -98,19 +98,19 @@
 
                                 if ($logged_in_user['user_type'] == '1') {
                                     //$_SESSION['user'] = $logged_in_userid['user_id'];
-                                    $_SESSION['user_name'] = $logged_in_user['user_name'];
+                                    $_SESSION['email'] = $logged_in_user['email'];
                                     $_SESSION['user'] = $logged_in_user;
                                     $_SESSION['user_type'] = "Admin";
                                     $_SESSION['success']  = "You are now logged in";
                                     header('location: dashboard.php');
                                 } else if ($logged_in_user['user_type'] == '2') {
-                                    $_SESSION['user_name'] = $logged_in_user['user_name'];
+                                    $_SESSION['email'] = $logged_in_user['email'];
                                     $_SESSION['user'] = $logged_in_user;
                                     $_SESSION['user_type'] = "Vendor";
                                     $_SESSION['success']  = "You are now logged in";
                                     header('location: dashboard_Vendor.php');
                                 } else if ($logged_in_user['user_type'] == '3') {
-                                    $_SESSION['user_name'] = $logged_in_user['user_name'];
+                                    $_SESSION['email'] = $logged_in_user['email'];
                                     $_SESSION['user'] = $logged_in_user;
                                     $_SESSION['user_type'] = "Executive Officer";
                                     $_SESSION['success']  = "You are now logged in";
@@ -120,7 +120,7 @@
                                 }
                             } else {
 
-                                echo "Wrong username/password combination";
+                                echo "Wrong email/password combination";
                             }
                         }
 
@@ -175,6 +175,13 @@
                         }
                         ?>
                     </div>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="forgot-password.php">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="customer_register.php">Create an Account!</a>
+                    </div>
                 </form>
 
 
@@ -185,7 +192,7 @@
                 </div>
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright © Mobitel 2019</span>
+                        <span>Copyright © PMS 2020</span>
                     </div>
                 </div>
             </div>

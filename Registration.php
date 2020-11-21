@@ -26,8 +26,8 @@
           <form method="post" action="">
             <div class="form-row">
               <div class="col-md-4 mb-3">
-                <label>Username :</label>
-                <input type="text" name="name" class="form-control" placeholder="Enter the username" maxlength="10" required>
+                <label>Email Address :</label>
+                <input type="text" name="name" class="form-control" placeholder="Enter the email address" maxlength="10" required>
               </div>
             </div>
             <div class="form-row">
@@ -74,7 +74,7 @@
             echo "The two passwords do not match";
           } else {
             $password = md5($password1);
-            $qry = "INSERT INTO `user_account`(`user_name`, `user_type`, `password`, `activated`) VALUES ('$name','$type','$password','$active')";
+            $qry = "INSERT INTO `user_account`(`email`, `user_type`, `password`, `activated`) VALUES ('$name','$type','$password','$active')";
             //echo $qry;
             if (!mysqli_query($con, $qry)) {
               die('Error: ' . mysqli_error());
@@ -97,8 +97,8 @@
           <form method="post" action="">
             <div class="form-row">
               <div class="col-md-4 mb-3">
-                <label>Username :</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="Enter the username" maxlength="10" required>
+                <label>Email Address :</label>
+                <input type="text" name="email" id="email" class="form-control" placeholder="Enter the email address" maxlength="10" required>
               </div>
             </div>
             <div class="form-row">
@@ -123,7 +123,7 @@
           if (isset($_POST['Reset'])) {
             require_once('connect.php');
             //$date = $_POST['date'];
-            $name = $_POST['username'];
+            $name = $_POST['email'];
             $password1 = $_POST['pwd1'];
             $password2 = $_POST['pwd2'];
 
@@ -164,7 +164,7 @@
             echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>   
                   <tr> 
-                  <th>Username</th>
+                  <th>Email Address</th>
                   <th>User_Type</th>
                   <th>Activate</th>  
                   <th width="20%"></th>         
@@ -174,7 +174,7 @@
             if ($res = $con->query($qry)) {
               while ($row = $res->fetch_assoc()) {
                 $id = $row["user_id"];
-                $field1name = $row["user_name"];
+                $field1name = $row["email"];
                 $field2name = $row["user_type"];
                 $field3name = $row["activated"];
 
@@ -235,7 +235,7 @@
     for (var i = 1; i < table.rows.length; i++) {
       table.rows[i].onclick = function() {
         //rIndex = this.rowIndex;
-        document.getElementById("username").value = this.cells[0].innerHTML;
+        document.getElementById("email").value = this.cells[0].innerHTML;
         //  document.getElementById("pwd1").value = this.cells[1].innerHTML;
       };
     }

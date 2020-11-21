@@ -320,7 +320,7 @@
       $StartingBalance = $_POST['StartingBalance'];
       $LitresPumped = $_POST['LitresPumped'];
       $CurrentMeter = $_POST['CurrentMeter'];
-      $Vendor = $_SESSION['user_name'];
+      $Vendor = $_SESSION['email'];
 
       //$qry = "SELECT * FROM `total_geny_records` WHERE `siteID` = 'AMAKK1' ORDER BY id DESC LIMIT 1";
       $qry = "SELECT * FROM `total_geny_records` WHERE `siteID` = '" . $SiteID . "' ORDER BY id DESC LIMIT 1";
