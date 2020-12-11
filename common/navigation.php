@@ -17,7 +17,7 @@
     <!-- Nav Item  -->
 
     <?php
-    if ($_SESSION['user_type'] == 'Admin') {
+    if ($_SESSION['user_type'] == 'Admin' | $_SESSION['user_type'] == 'Executive_Officer') {
       echo '
       <li class="nav-item">
       <a class="nav-link" href="dashboard.php">
@@ -42,9 +42,14 @@
     } else {
       echo '
       <li class="nav-item">
-      <a class="nav-link" href="dashboard_Vendor.php">
+      <a class="nav-link" href="dashboard_Customer.php">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="Parking_Spaces_Requests.php">
+        <i class="fas fa-comments"></i>
+        <span>Parking Spaces Requests</span></a>
     </li>';
     }
     ?>

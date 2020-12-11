@@ -13,9 +13,6 @@
   </div>
   <!-- Content Row -->
   <div class="row">
-
-
-
     <!-- Reg  -->
     <div class="col-xl-12 col-md-6 mb-4">
       <div class="card shadow mb-4">
@@ -47,16 +44,13 @@
                 <label>User Type :</label>
                 <select class="form-control" name="type" required>
                   <option value="" disabled selected>Choose User Type</option>
-                  <option value="2">Vendor</option>
+                  <option value="1">Admin</option>
                   <option value="3">Executive Officer</option>
-
                 </select>
               </div>
             </div>
-
             <br>
             <input class="btn btn-success" type=submit value="ADD" name="submit1">
-
           </form>
         </div>
         <?php
@@ -64,6 +58,7 @@
         if (isset($_POST['submit1'])) {
           require_once('connect.php');
           //$date = $_POST['date'];
+          $user_id = uniqid();
           $name = $_POST['name'];
           $password1 = $_POST['password1'];
           $password2 = $_POST['password2'];
@@ -74,7 +69,7 @@
             echo "The two passwords do not match";
           } else {
             $password = md5($password1);
-            $qry = "INSERT INTO `user_account`(`email`, `user_type`, `password`, `activated`) VALUES ('$name','$type','$password','$active')";
+            $qry = "INSERT INTO `user_account`(`user_id`,`email`, `user_type`, `password`, `activated`) VALUES ('$user_id','$name','$type','$password','$active')";
             //echo $qry;
             if (!mysqli_query($con, $qry)) {
               die('Error: ' . mysqli_error());
@@ -113,10 +108,8 @@
                 <input type="password" name="pwd2" id="pwd2" class="form-control" placeholder="Enter the password again" maxlength="30" required>
               </div>
             </div>
-
             <br>
             <input class="btn btn-success" type=submit value="Reset" name="Reset">
-
           </form>
           <?php
 
@@ -143,7 +136,6 @@
             }
           }
           ?>
-
         </div>
       </div>
     </div>
@@ -159,7 +151,7 @@
             <?php
             require_once('connect.php');
 
-            $qry = "SELECT * FROM user_account WHERE `user_type`='2' OR `user_type`='3' OR `user_type`='4' OR `user_type`='5' OR `user_type`='6' OR `user_type`='7'OR `user_type`='8'";
+            $qry = "SELECT * FROM user_account WHERE `user_type`='1' OR `user_type`='2' OR `user_type`='3'";
 
             echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>   
@@ -193,12 +185,10 @@
              
                                   </tr>";
                   }
-                } else if ($field2name == '2') {
-                  // `user_name`,`user_type`, `password`, `activated`   
-                  //<a type='button' class='btn btn-warning'>Reset Password</a>         
+                } else if ($field2name == '2') {       
                   echo "<tr> 
                             <td>" . $field1name . "</td> 
-                            <td>Vendor</td>";
+                            <td>Customer</td>";
                   if ($field3name == '1') {
                     echo "<td>Activate</td><td><a href=\"activate.php?id=" . $row['user_id'] . "&active=" . $row['activated'] . "\" type='button' class='btn btn-info'>Activate / Deactivate</a>
                               </td> 
@@ -210,7 +200,22 @@
         
                               </tr>";
                   }
-                } else {
+                } else if ($field2name == '1') {       
+                  echo "<tr> 
+                            <td>" . $field1name . "</td> 
+                            <td>Admin</td>";
+                  if ($field3name == '1') {
+                    echo "<td>Activate</td><td><a href=\"activate.php?id=" . $row['user_id'] . "&active=" . $row['activated'] . "\" type='button' class='btn btn-info'>Activate / Deactivate</a>
+                              </td> 
+        
+                              </tr>";
+                  } else {
+                    echo "<td>Deactivate</td><td><a href=\"activate.php?id=" . $row['user_id'] . "&active=" . $row['activated'] . "\" type='button' class='btn btn-info'>Activate / Deactivate</a>
+                              </td>  
+        
+                              </tr>";
+                  }
+                }else {
                   echo "<tr><td>Undefined User</td></tr>";
                 }
               }
@@ -218,13 +223,11 @@
               $res->free();
             }
             ?></table>
-
           </div>
         </div>
       </div>
     </div>
     <!-- /.container-fluid -->
-
   </div>
   <!-- End of Main Content -->
 

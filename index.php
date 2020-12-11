@@ -106,13 +106,13 @@
                                 } else if ($logged_in_user['user_type'] == '2') {
                                     $_SESSION['email'] = $logged_in_user['email'];
                                     $_SESSION['user'] = $logged_in_user;
-                                    $_SESSION['user_type'] = "Vendor";
+                                    $_SESSION['user_type'] = "Customer";
                                     $_SESSION['success']  = "You are now logged in";
-                                    header('location: dashboard_Vendor.php');
+                                    header('location: dashboard_Customer.php');
                                 } else if ($logged_in_user['user_type'] == '3') {
                                     $_SESSION['email'] = $logged_in_user['email'];
                                     $_SESSION['user'] = $logged_in_user;
-                                    $_SESSION['user_type'] = "Executive Officer";
+                                    $_SESSION['user_type'] = "Executive_Officer";
                                     $_SESSION['success']  = "You are now logged in";
                                     header('location: dashboard.php');
                                 } else {

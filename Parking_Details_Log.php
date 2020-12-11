@@ -27,7 +27,7 @@
                             <?php
 
                             require_once('connect.php');
-                            $user = $_SESSION['user_name'];
+                            $user = $_SESSION['email'];
                             $qry3 = "SELECT * FROM parking_details JOIN user_account ON parking_details.vehicle_no = user_account.number_plate";
 
                             echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

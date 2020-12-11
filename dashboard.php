@@ -70,6 +70,10 @@
     <form method="post" action="">
       <div class="form-row">
         <div class="col-md-4 mb-3">
+         <a href="QR_Scanner.php"> <i class="fa fa-qrcode" aria-hidden="true" style="font-size:48px;padding-top: 20px;padding-bottom: 0px;padding-left: 50px;color: indigo;"></i>
+          <label>Use QR</label> </a>
+        </div>
+        <div class="col-md-4 mb-3">
           <label>Vehicle No :</label>
           <input type="text" name="VehicleNo" id="VehicleNo" class="form-control" placeholder="Enter Vehicle No" maxlength="11" required>
         </div>
@@ -112,7 +116,7 @@
       } else {
         $qry1 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories ','$Remark','$vehicle_in')";
         if (!mysqli_query($con, $qry1)) {
-          die('Error: ' . mysqli_error());
+          die('Error: ' . mysqli_error($con));
         }
         echo "Your record Added Successfully";
       }
@@ -134,7 +138,7 @@
       <?php
 
       require_once('connect.php');
-      $user = $_SESSION['user_name'];
+      $user = $_SESSION['email'];
       $qry3 = "SELECT * FROM parking_details WHERE `vehicle_out` IS NULL";
 
       echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

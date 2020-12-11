@@ -11,7 +11,7 @@ if (isset($_POST['login_btn'])) {
 if (isset($_GET['logout'])) {
 	session_destroy();
 	unset($_SESSION['user']);
-	header("login.php");
+	header("index.php");
 }
 
 function login()
@@ -39,15 +39,15 @@ function login()
 			//$_SESSION['user'] = $logged_in_userid['user_id'];
 			$_SESSION['user_name'] = $logged_in_user['user_name'];
 			$_SESSION['user'] = $logged_in_user;
-			$_SESSION['user_type'] = Admin;
+			$_SESSION['user_type'] = "Admin";
 			$_SESSION['success']  = "You are now logged in";
 			header('location: dashboard.php');
 		} else if ($logged_in_user['user_type'] == '2') {
 			$_SESSION['user_name'] = $logged_in_user['user_name'];
 			$_SESSION['user'] = $logged_in_user;
-			$_SESSION['user_type'] = "Vendor";
+			$_SESSION['user_type'] = "Customer";
 			$_SESSION['success']  = "You are now logged in";
-			header('location: dashboard_Vendor.php');
+			header('location: dashboard_Customer.php');
 		} else if ($logged_in_user['user_type'] == '3') {
 			$_SESSION['user_name'] = $logged_in_user['user_name'];
 			$_SESSION['user'] = $logged_in_user;

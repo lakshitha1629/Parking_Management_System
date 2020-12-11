@@ -69,11 +69,13 @@
 
                             </form>
                             <?php
+                            
 
                             if (isset($_POST['reg_btn'])) {
                                 require_once('connect.php');
                                 //$date = $_POST['date'];
-                                $name = $_POST['FirstName'] .' '. $_POST['LastName'];
+                                $user_id = uniqid();
+                                $name = $_POST['FirstName'] . ' ' . $_POST['LastName'];
                                 $VehicleNumberPlate = $_POST['VehicleNumberPlate'];
                                 $VehicleTypes = $_POST['VehicleTypes'];
                                 $PhoneNumber = $_POST['PhoneNumber'];
@@ -83,12 +85,23 @@
                                 $type = '2';
                                 $active = '1';
 
+                                // QR Code
+                                include './phpqrcode/qrlib.php';
+                                $path = 'images/QR/';
+                                $QR_Code = $path . $user_id . ".png";
+                                $ecc = 'L';
+                                $pixel_Size = 10;
+                                $frame_Size = 10;
+
+                                // Generates QR Code and Stores it in directory given 
+                                QRcode::png($user_id, $QR_Code, $ecc, $pixel_Size);
+
                                 if ($password1 != $password2) {
                                     echo "The two passwords do not match";
                                 } else {
                                     $password = md5($password1);
-                                    $qry = "INSERT INTO `user_account`(`name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`) VALUES ('$name','$Email','$type','$password','$active','$VehicleNumberPlate','$VehicleTypes','$PhoneNumber')";
-                                    // echo $qry;
+                                    $qry = "INSERT INTO `user_account`(`user_id`,`name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`) VALUES ('$user_id','$name','$Email','$type','$password','$active','$VehicleNumberPlate','$VehicleTypes','$PhoneNumber')";
+                                    echo $qry;
 
                                     if (!mysqli_query($con, $qry)) {
                                         die('Error: ' . mysqli_error());
