@@ -70,8 +70,8 @@
     <form method="post" action="">
       <div class="form-row">
         <div class="col-md-4 mb-3">
-         <a href="QR_Scanner.php"> <i class="fa fa-qrcode" aria-hidden="true" style="font-size:48px;padding-top: 20px;padding-bottom: 0px;padding-left: 50px;color: indigo;"></i>
-          <label>Use QR</label> </a>
+          <a href="QR_Scanner.php"> <i class="fa fa-qrcode" aria-hidden="true" style="font-size:48px;padding-top: 20px;padding-bottom: 0px;padding-left: 50px;color: indigo;"></i>
+            <label>Use QR</label> </a>
         </div>
         <div class="col-md-4 mb-3">
           <label>Vehicle No :</label>
@@ -195,3 +195,25 @@
 <!-- End of Main Content -->
 
 <?php include 'common/footer.php'; ?>
+
+<script>
+  $("#VehicleNo").autocomplete({
+    source: function(request, response) {
+      $.ajax({
+        url: "AutoComplete/VehicleNo.php",
+        type: 'post',
+        dataType: "json",
+        data: {
+          search: request.term
+        },
+        success: function(data) {
+          response(data);
+        }
+      });
+    },
+    select: function(event, ui) {
+      $('#VehicleNo').val(ui.item.value);
+      return false;
+    }
+  });
+</script>

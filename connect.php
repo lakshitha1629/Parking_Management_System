@@ -4,10 +4,8 @@ $username = 'root';
 $password = '';
 $dbname = 'pms_db';
 
-$con = new mysqli($hostname,$username,$password,$dbname);
+$con = new mysqli($hostname, $username, $password, $dbname);
 
-if (mysqli_connect_errno())
-  {
+if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
-  }
-?>
+}

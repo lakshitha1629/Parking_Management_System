@@ -17,18 +17,16 @@
                 </div>
                 <div class="card-body">
                     <div class="embed-responsive embed-responsive-4by3">
-                        <video class="embed-responsive-item" id="preview"></video>
+                        <video class="embed-responsive-item" id="preview">
+                        </video>
                     </div>
-                    <p>Output -</p>
-                    <li id="demo">
-                    </li>
+                    <canvas id="myCanvas" width="150" height="150" style="border: 1.5px solid blueviolet;position: absolute;bottom: 124px;top: 124px;right: 124px;left: 124px;">
+                    </canvas>
                 </div>
             </div>
-
         </div>
     </div>
-</div>
-<!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 
 </div>
 <!-- End of Main Content -->
@@ -41,9 +39,35 @@
         video: document.getElementById('preview')
     });
     scanner.addListener('scan', function(content) {
-        window.alert("Read QR - " + content);
-        document.getElementById("demo").innerHTML = content;
+        // window.alert("Read QR - " + content);
+
+
+        $.ajax({
+            url: "addQrDb.php",
+            type: 'post',
+            dataType: "json",
+            data: {
+                id: content
+            },
+            success: function(data) {
+                $.confirm({
+                    title: 'Success!',
+                    content: data,
+                    type: 'green',
+                    typeAnimated: true,
+                    autoClose: 'tryAgain|5000',
+                    buttons: {
+                        tryAgain: {
+                            text: 'OK',
+                            btnClass: 'btn-green',
+                            action: function() {}
+                        }
+                    }
+                });
+            }
+        });
     });
+
     Instascan.Camera.getCameras().then(function(cameras) {
         if (cameras.length > 0) {
             scanner.start(cameras[0]);

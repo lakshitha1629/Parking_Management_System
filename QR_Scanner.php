@@ -1,4 +1,5 @@
 <?php include 'common/header.php'; ?>
+<!-- <meta http-equiv="refresh" content="900"> -->
 
 <?php include 'common/navigation.php'; ?>
 
@@ -34,74 +35,32 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-
-                        <tbody>
-                            <?php
-
-                            require_once('connect.php');
-                            $user = $_SESSION['email'];
-                            $qry3 = "SELECT * FROM parking_details JOIN user_account ON parking_details.vehicle_no = user_account.number_plate  WHERE parking_details.vehicle_out IS NULL";
-
-                            echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="genytable" width="100%" cellspacing="0">
                             <thead>
-                            <tr>
-                                <th>Vehicle No</th>
-                                <th>Vehicle Categorie</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Vehicle Type</th>
-                                <th>Phone Number</th>
-                                <th>Remark</th>
-                                <th>Vehicle IN Time</th>
-                                <th>Vehicle Out Time</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Vehicle No</th>
-                                <th>Vehicle Categorie</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Vehicle Type</th>
-                                <th>Phone Number</th>
-                                <th>Remark</th>
-                                <th>Vehicle IN Time</th>
-                                <th>Vehicle Out Time</th>
-                            </tr>
-                        </tfoot>';
-
-                            if ($res = $con->query($qry3)) {
-                                while ($row = $res->fetch_assoc()) {
-                                    $field1name = $row["vehicle_no"];
-                                    $field2name = $row["vehicle_categorie"];
-                                    $field3name = $row["remark"];
-                                    $field4name = $row["vehicle_in"];
-                                    $field5name = $row["vehicle_out"];
-
-                                    $field6name = $row["name"];
-                                    $field7name = $row["email"];
-                                    $field8name = $row["vehicle_type"];
-                                    $field9name = $row["phone"];
-
-                                    echo "<tr> 
-                                            <td>" . $field1name . "</td> 
-                                            <td>" . $field2name . "</td> 
-                                            <td>" . $field6name . "</td> 
-                                            <td>" . $field7name . "</td> 
-                                            <td>" . $field8name . "</td> 
-                                            <td>" . $field9name . "</td> 
-                                            <td>" . $field3name . "</td> 
-                                            <td>" . $field4name . "</td> 
-                                            <td>" . $field5name . "</td>
-                                        </tr>";
-                                }
-
-                                $res->free();
-                            }
-                            ?>
-                        </tbody>
+                                <tr>
+                                    <th>Vehicle No</th>
+                                    <th>Vehicle Categorie</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Phone Number</th>
+                                    <th>Vehicle IN Time</th>
+                                    <th>Vehicle Out Time</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Vehicle No</th>
+                                    <th>Vehicle Categorie</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Phone Number</th>
+                                    <th>Vehicle IN Time</th>
+                                    <th>Vehicle Out Time</th>
+                                </tr>
+                            </tfoot>
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -115,8 +74,27 @@
 
 <?php include 'common/footer.php'; ?>
 
+
+<!--jQuary-->
+<script>
+    window.setTimeout(function() {
+        location.reload();
+    }, 4000);
+
+    $(document).ready(function() {
+        var dataTable = $('#genytable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "Select_QR_Scanner.php",
+                type: "post"
+            }
+        });
+    });
+</script>
+
 <script>
     function myFunction() {
-        var myWindow = window.open("QR.php", "", "width=400,height=600");
+        var myWindow = window.open("QR.php", "", "width=450,height=550");
     }
 </script>
