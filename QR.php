@@ -39,9 +39,6 @@
         video: document.getElementById('preview')
     });
     scanner.addListener('scan', function(content) {
-        // window.alert("Read QR - " + content);
-
-
         $.ajax({
             url: "addQrDb.php",
             type: 'post',
@@ -62,6 +59,23 @@
                             btnClass: 'btn-green',
                             action: function() {}
                         }
+                    }
+                });
+            },
+            error: function(data) {
+                $.confirm({
+                    title: 'Encountered an error!',
+                    content: 'Something went downhill, this may be serious',
+                    type: 'red',
+                    typeAnimated: true,
+                    autoClose: 'tryAgain|10000',
+                    buttons: {
+                        tryAgain: {
+                            text: 'Try again',
+                            btnClass: 'btn-red',
+                            action: function() {}
+                        },
+                        close: function() {}
                     }
                 });
             }

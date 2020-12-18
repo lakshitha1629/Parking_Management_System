@@ -7,6 +7,40 @@
 <?php include 'common/top.php'; ?>
 
 
+<?php
+require_once('connect.php');
+
+function fill_product($con)
+{
+  $output = '';
+  $sql = "SELECT * FROM `parking_slots`";
+  $result = mysqli_query($con, $sql);
+  while ($row = mysqli_fetch_array($result)) {
+    $field01name = $row["parking_slot"];
+    $field02name = $row["status"];
+
+    if ($field02name == "Active") {
+      $field03name = "bg-danger";
+    } elseif ($field02name == "Reserved") {
+      $field03name = "bg-warning";
+    } else {
+      $field03name = "bg-success";
+      // $field03name = "bg-light";
+    }
+
+    $output .= '
+        <div class="col-lg-2 mb-4">
+          <div class="card ' . $field03name . ' text-white shadow">
+            <div class="card-body text-center">
+            ' . $field01name . '
+            </div>
+          </div>
+        </div>';
+  }
+  return $output;
+}
+?>
+
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Parking Spaces Design</h6>
@@ -14,48 +48,16 @@
   <div class="card-body">
     <!-- Color System -->
     <div class="row">
-      <div class="col-lg-2 mb-4">
+      <!-- bg-success bg-light bg-danger -->
+
+      <?php echo fill_product($con); ?>
+      <!-- <div class="col-lg-2 mb-4">
         <div class="card bg-light text-black shadow">
           <div class="card-body text-center">
             1
           </div>
         </div>
-      </div>
-      <div class="col-lg-2 mb-4">
-        <div class="card bg-light text-black shadow">
-          <div class="card-body text-center">
-            2
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2 mb-4">
-        <div class="card bg-success text-white shadow">
-          <div class="card-body text-center">
-            3
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2 mb-4">
-        <div class="card bg-danger text-white shadow">
-          <div class="card-body text-center">
-            4
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2 mb-4">
-        <div class="card bg-light text-black shadow">
-          <div class="card-body text-center">
-            5
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2 mb-4">
-        <div class="card bg-light text-black shadow">
-          <div class="card-body text-center">
-            6
-          </div>
-        </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -69,15 +71,31 @@
   <div class="card-body">
     <form method="post" action="">
       <div class="form-row">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
           <a href="QR_Scanner.php"> <i class="fa fa-qrcode" aria-hidden="true" style="font-size:48px;padding-top: 20px;padding-bottom: 0px;padding-left: 50px;color: indigo;"></i>
             <label>Use QR</label> </a>
+        </div>
+        <div class="col-md-2 mb-3">
+          <label>Parking Slot :</label>
+          <select name="ParkingSlot" id="ParkingSlot" class="form-control" required>
+            <?php
+            require_once('connect.php');
+
+            $sql_slot = "SELECT * FROM `parking_slots` WHERE `status`!='Active' AND `status`!='Reserved'";
+            $result_slot = mysqli_query($con, $sql_slot);
+            while ($row_slot = mysqli_fetch_array($result_slot)) {
+              $parking_slot = $row_slot["parking_slot"];
+
+              echo "<option value='" . $parking_slot . "'>" . $parking_slot . "</option>";
+            }
+            ?>
+          </select>
         </div>
         <div class="col-md-4 mb-3">
           <label>Vehicle No :</label>
           <input type="text" name="VehicleNo" id="VehicleNo" class="form-control" placeholder="Enter Vehicle No" maxlength="11" required>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
           <label>Vehicle Categorie :</label>
           <select name="VehicleCategories" id="VehicleCategories" class="form-control" required>
             <option value="Customer_Vehicle">Customer Vehicle</option>
@@ -104,6 +122,7 @@
 
       $VehicleNo = $_POST['VehicleNo'];
       $VehicleCategories = $_POST['VehicleCategories'];
+      $ParkingSlot = $_POST['ParkingSlot'];
       $Remark = $_POST['Remark'];
       $vehicle_in = $date;
       $vehicle_out = $date;
@@ -114,7 +133,7 @@
       if ($checkrows > 0) {
         echo "<div style='color: red;'>*Your record already Added.</div>";
       } else {
-        $qry1 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories ','$Remark','$vehicle_in')";
+        $qry1 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories','$Remark','$vehicle_in')";
         if (!mysqli_query($con, $qry1)) {
           die('Error: ' . mysqli_error($con));
         }

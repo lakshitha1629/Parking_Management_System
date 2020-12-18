@@ -4,6 +4,41 @@
 
 <?php include 'common/topbar.php'; ?>
 
+
+<?php
+require_once('connect.php');
+
+function fill_product($con)
+{
+  $output = '';
+  $sql = "SELECT * FROM `parking_slots`";
+  $result = mysqli_query($con, $sql);
+  while ($row = mysqli_fetch_array($result)) {
+    $field01name = $row["parking_slot"];
+    $field02name = $row["status"];
+
+    if ($field02name == "Active") {
+      $field03name = "bg-danger";
+    } elseif ($field02name == "Reserved") {
+      $field03name = "bg-warning";
+    } else {
+      $field03name = "bg-success";
+      // $field03name = "bg-light";
+    }
+
+    $output .= '
+        <div class="col-lg-2 mb-4">
+          <div class="card ' . $field03name . ' text-white shadow">
+            <div class="card-body text-center">
+            ' . $field01name . '
+            </div>
+          </div>
+        </div>';
+  }
+  return $output;
+}
+?>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -48,34 +83,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-lg-2 mb-4">
-              <div class="card bg-light text-black shadow">
-                <div class="card-body text-center">
-                  1
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-2 mb-4">
-              <div class="card bg-light text-black shadow">
-                <div class="card-body text-center">
-                  2
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-2 mb-4">
-              <div class="card bg-success text-white shadow">
-                <div class="card-body text-center">
-                  3
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-2 mb-4">
-              <div class="card bg-danger text-white shadow">
-                <div class="card-body text-center">
-                  4
-                </div>
-              </div>
-            </div>
+            <?php echo fill_product($con); ?>
           </div>
         </div>
       </div>
@@ -89,11 +97,23 @@
       <h6 class="m-0 font-weight-bold text-primary">Booking Parking Space Form</h6>
     </div>
     <div class="card-body">
-      <form method="post" action="">
+      <form method="post" action="dashboard_Customer.php">
         <div class="form-row">
           <div class="col-md-4 mb-3">
             <label>Space No :</label>
-            <input type="text" name="SpaceNo" id="SpaceNo" class="form-control" placeholder="Enter Space No" maxlength="11" required>
+            <select name="SpaceNo" id="SpaceNo" class="form-control" required>
+              <?php
+              require_once('connect.php');
+
+              $sql_slot = "SELECT * FROM `parking_slots` WHERE `status`!='Active' AND `status`!='Reserved'";
+              $result_slot = mysqli_query($con, $sql_slot);
+              while ($row_slot = mysqli_fetch_array($result_slot)) {
+                $parking_slot = $row_slot["parking_slot"];
+
+                echo "<option value='" . $parking_slot . "'>" . $parking_slot . "</option>";
+              }
+              ?>
+            </select>
           </div>
           <div class="col-md-4 mb-3">
             <label>Vehicle Entering Time (Expected) :</label>
@@ -110,7 +130,7 @@
             <input type="text" name="Remark" id="Remark" class="form-control" placeholder="Enter Remark">
           </div>
         </div>
-        <input class="btn btn-success" type=submit value="ADD" name="submit1">
+        <input class="btn btn-success" type=submit value="ADD" name="submit1" onClick="refreshPage()">
       </form>
       <?php
 
@@ -121,7 +141,7 @@
         $SpaceNo = $_POST['SpaceNo'];
         $datetime = $_POST['datetime'];
         $Remark = $_POST['Remark'];
-        $status = 'active';
+        $status = 'Reserved';
 
         // time range
         date_default_timezone_set('Asia/Colombo');
@@ -133,11 +153,24 @@
         $start = $end - (2 * 60 * 60);
 
         if ($nowtime >= $start && $nowtime <= $end) {
-          $qry1 = "INSERT INTO `booking_parking`(`space_no`, `vehicle_entering`, `status`, `remark`, `email`) VALUES ('$SpaceNo','$datetime','$status','$Remark','$user')";
-          if (!mysqli_query($con, $qry1)) {
+          $qry = "INSERT INTO `booking_parking`(`space_no`, `vehicle_entering`, `status`, `remark`, `email`) VALUES ('$SpaceNo','$datetime','$status','$Remark','$user')";
+          if (!mysqli_query($con, $qry)) {
             die('Error: ' . mysqli_error($con));
+          } else {
+            // echo "Your record Added Successfully";
+            $check = mysqli_query($con, "SELECT * FROM `parking_slots` WHERE `status`!= 'Active'");
+            $checkrows = mysqli_num_rows($check);
+            if ($checkrows > 0) {
+              $qry1 = "UPDATE `parking_slots` SET `status`='$status',`email`='$user' WHERE `parking_slot`='$SpaceNo'";
+
+              if (!mysqli_query($con, $qry1)) {
+                die('Error: ' . mysqli_error($con));
+              }
+              echo "Your record Added Successfully";
+            } else {
+              echo "Error - Please Check Parking Slot";
+            }
           }
-          echo "Your record Added Successfully";
         } else {
           echo "Please go through the conditions";
         }
@@ -168,7 +201,7 @@
                   <th>Remark</th>
                   <th>Email</th>
                 </tr>
-              </thead>';              
+              </thead>';
 
         if ($res = $con->query($qry)) {
           while ($row = $res->fetch_assoc()) {
@@ -184,7 +217,7 @@
                     <td>" . $field3name . "</td> 
                     <td>" . $field4name . "</td> 
                     <td>" . $field5name . "</td>
-                </tr>";                          
+                </tr>";
           }
 
           $res->free();
@@ -201,3 +234,9 @@
 <!-- End of Main Content -->
 
 <?php include 'common/footer.php'; ?>
+
+<script>
+  function refreshPage() {
+    window.location.reload();
+  }
+</script>

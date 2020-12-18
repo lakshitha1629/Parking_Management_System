@@ -33,58 +33,54 @@
     <!-- 2 -->
 
     <div class="col-xl-3 col-md-6 mb-4">
-      <a style="text-decoration:none" href="Vendor_Requests.php">
-        <div class="card border-left-success shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Parking Spaces Request Count</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                    // require_once('connect.php');
-                                                                    // $date3 = date('Y-m-d');
-                                                                    // $qry = "SELECT COUNT(`request`) as d FROM `total_geny_records` WHERE `request`='Pending..'";
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Parking Spaces Request Count</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
+                                                                  // require_once('connect.php');
+                                                                  // $date3 = date('Y-m-d');
+                                                                  // $qry = "SELECT COUNT(`request`) as d FROM `total_geny_records` WHERE `request`='Pending..'";
 
-                                                                    // $res = $con->query($qry);
-                                                                    // while ($data1 = $res->fetch_assoc()) {
-                                                                    //   echo $data1['d'];
-                                                                    // }
-                                                                     ?></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-battery-quarter fa-2x text-gray-300"></i>
-              </div>
+                                                                  // $res = $con->query($qry);
+                                                                  // while ($data1 = $res->fetch_assoc()) {
+                                                                  //   echo $data1['d'];
+                                                                  // }
+                                                                  ?></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-battery-quarter fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
-      </a>
+      </div>
     </div>
 
     <!-- 3 -->
     <div class="col-xl-3 col-md-6 mb-4">
-      <a style="text-decoration:none" href="Vendor_Requests.php">
-        <div class="card border-left-info shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Available Parking Spaces Count</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                    // require_once('connect.php');
-                                                                    // $date3 = date('Y-m-d');
-                                                                    // $qry = "SELECT COUNT(`site_id`) as c FROM `standby_geny_list`";
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Available Parking Spaces Count</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
+                                                                  require_once('connect.php');
+                                                                  $date3 = date('Y-m-d');
+                                                                  $qry = "SELECT COUNT(`status`) as c FROM `parking_slots` WHERE `status`='Inactive'";
 
-                                                                    // $res = $con->query($qry);
-                                                                    // while ($data1 = $res->fetch_assoc()) {
-                                                                    //   echo $data1['c'];
-                                                                    // }
-                                                                     ?></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-battery-full fa-2x text-gray-300"></i>
-              </div>
+                                                                  $res = $con->query($qry);
+                                                                  while ($data1 = $res->fetch_assoc()) {
+                                                                    echo $data1['c'];
+                                                                  }
+                                                                  ?></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-battery-full fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
-      </a>
+      </div>
     </div>
 
 
