@@ -1,7 +1,12 @@
 <?php
-$hostname = 'localhost';
-$username = 'root';
-$password = '';
+// $hostname = 'localhost';
+// $username = 'root';
+// $password = '';
+// $dbname = 'pms_db';
+
+$hostname = 'us-cdbr-east-02.cleardb.com';
+$username = 'b7937c0332948e';
+$password = '1114bc27';
 $dbname = 'pms_db';
 
 $con = new mysqli($hostname, $username, $password, $dbname);

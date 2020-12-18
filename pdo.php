@@ -1,9 +1,14 @@
 <?php
 class Database
 {
-    private static $dbName = 'id14974201_iotproject1';
-    private static $dbHost = 'localhost';
-    private static $dbUsername = 'id14974201_ultrasonic';
+    // private static $dbName = 'id14974201_iotproject1';
+    // private static $dbHost = 'localhost';
+    // private static $dbUsername = 'id14974201_ultrasonic';
+    // private static $dbUserPassword = '~T#f@9ukO>7g8a_l';
+
+    private static $dbName = 'pms_db';
+    private static $dbHost = 'us-cdbr-east-02.cleardb.com';
+    private static $dbUsername = '1114bc27';
     private static $dbUserPassword = '~T#f@9ukO>7g8a_l';
 
     private static $cont  = null;
