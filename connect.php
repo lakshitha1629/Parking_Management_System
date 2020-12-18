@@ -7,7 +7,7 @@
 $hostname = 'us-cdbr-east-02.cleardb.com';
 $username = 'b7937c0332948e';
 $password = '1114bc27';
-$dbname = 'pms_db';
+$dbname = 'heroku_25074421fa4c861';
 
 $con = new mysqli($hostname, $username, $password, $dbname);
 

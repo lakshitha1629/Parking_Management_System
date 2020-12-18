@@ -6,7 +6,7 @@ class Database
     // private static $dbUsername = 'id14974201_ultrasonic';
     // private static $dbUserPassword = '~T#f@9ukO>7g8a_l';
 
-    private static $dbName = 'pms_db';
+    private static $dbName = 'heroku_25074421fa4c861';
     private static $dbHost = 'us-cdbr-east-02.cleardb.com';
     private static $dbUsername = '1114bc27';
     private static $dbUserPassword = '~T#f@9ukO>7g8a_l';
