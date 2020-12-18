@@ -1,0 +1,8 @@
+<---------------- HEROKU ------------------>
+
+db- heroku_25074421fa4c861
+user- b7937c0332948e
+pwd- 1114bc27
+host- us-cdbr-east-02.cleardb.com
+
+web link- https://mypark-bot.herokuapp.com/
