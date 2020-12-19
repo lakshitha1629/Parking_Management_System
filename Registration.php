@@ -185,7 +185,7 @@
              
                                   </tr>";
                   }
-                } else if ($field2name == '2') {       
+                } else if ($field2name == '2') {
                   echo "<tr> 
                             <td>" . $field1name . "</td> 
                             <td>Customer</td>";
@@ -200,7 +200,7 @@
         
                               </tr>";
                   }
-                } else if ($field2name == '1') {       
+                } else if ($field2name == '1') {
                   echo "<tr> 
                             <td>" . $field1name . "</td> 
                             <td>Admin</td>";
@@ -215,7 +215,7 @@
         
                               </tr>";
                   }
-                }else {
+                } else {
                   echo "<tr><td>Undefined User</td></tr>";
                 }
               }

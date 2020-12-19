@@ -69,7 +69,7 @@
 
                             </form>
                             <?php
-                            
+
 
                             if (isset($_POST['reg_btn'])) {
                                 require_once('connect.php');
@@ -101,7 +101,7 @@
                                 } else {
                                     $password = md5($password1);
                                     $qry = "INSERT INTO `user_account`(`user_id`,`name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`) VALUES ('$user_id','$name','$Email','$type','$password','$active','$VehicleNumberPlate','$VehicleTypes','$PhoneNumber')";
-                                    echo $qry;
+                                    // echo $qry;
 
                                     if (!mysqli_query($con, $qry)) {
                                         die('Error: ' . mysqli_error());
