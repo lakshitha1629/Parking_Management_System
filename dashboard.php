@@ -48,16 +48,7 @@ function fill_product($con)
   <div class="card-body">
     <!-- Color System -->
     <div class="row">
-      <!-- bg-success bg-light bg-danger -->
-
       <?php echo fill_product($con); ?>
-      <!-- <div class="col-lg-2 mb-4">
-        <div class="card bg-light text-black shadow">
-          <div class="card-body text-center">
-            1
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </div>
@@ -117,15 +108,19 @@ function fill_product($con)
     if (isset($_POST['submit1'])) {
       require_once('connect.php');
 
+      $user = $_SESSION['email'];
       date_default_timezone_set('Asia/Colombo');
       $date = date('Y-m-d H:i:s');
 
       $VehicleNo = $_POST['VehicleNo'];
       $VehicleCategories = $_POST['VehicleCategories'];
       $ParkingSlot = $_POST['ParkingSlot'];
-      $Remark = $_POST['Remark'];
+      $Remark = $_POST['Remark'] . "Add Value " . $user;
       $vehicle_in = $date;
       $vehicle_out = $date;
+
+
+      $status = 'Active';
 
       $check = mysqli_query($con, "SELECT * FROM `parking_details` WHERE `vehicle_no`='$VehicleNo' AND `vehicle_out` IS NULL");
       $checkrows = mysqli_num_rows($check);
@@ -133,11 +128,18 @@ function fill_product($con)
       if ($checkrows > 0) {
         echo "<div style='color: red;'>*Your record already Added.</div>";
       } else {
-        $qry1 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories','$Remark','$vehicle_in')";
-        if (!mysqli_query($con, $qry1)) {
-          die('Error: ' . mysqli_error($con));
-        }
+
+        $qry1 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`, `parking_slot`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories','$Remark','$ParkingSlot','$vehicle_in')";
+        $qry2 = "UPDATE `parking_slots` SET `status`='$status',`email`='$user' WHERE `parking_slot`='$ParkingSlot'";
+
+
+        mysqli_query($con, $qry1);
+
+
+        $result = mysqli_query($con, $qry2)
+          or die('Error: ' . mysqli_error($con));
         echo "Your record Added Successfully";
+        echo "<script>location.href='dashboard.php';</script>";
       }
     }
 
@@ -184,6 +186,7 @@ function fill_product($con)
       if ($res = $con->query($qry3)) {
         while ($row = $res->fetch_assoc()) {
           $id = $row["p_no"];
+          $ParkingSlot = $row["parking_slot"];
           $field1name = $row["vehicle_no"];
           $field2name = $row["vehicle_categorie"];
           $field3name = $row["remark"];
@@ -194,7 +197,7 @@ function fill_product($con)
                   <td>" . $field2name . "</td> 
                   <td>" . $field3name . "</td> 
                   <td>" . $field4name . "</td> 
-                  <td><a onClick=\"return confirm('Are you sure " . $row['vehicle_no'] . " Vehicle Exit?')\" href=\"vehicle_out.php?id=" . $row['p_no'] . "\"><button type='button' class='btn btn-secondary btn-xs'>Vehicle Exit</button></a>
+                  <td><a onClick=\"return confirm('Are you sure " . $row['vehicle_no'] . " Vehicle Exit?')\" href=\"vehicle_out.php?id=" . $row['p_no'] . "&ParkingSlot=" . $row['parking_slot'] . "\"><button type='button' class='btn btn-secondary btn-xs'>Vehicle Exit</button></a>
                   </td>
                 </tr>";
         }

@@ -152,27 +152,24 @@ function fill_product($con)
         $end = strtotime($_POST['datetime'] . ':00');
         $start = $end - (2 * 60 * 60);
 
-        if ($nowtime >= $start && $nowtime <= $end) {
-          $qry = "INSERT INTO `booking_parking`(`space_no`, `vehicle_entering`, `status`, `remark`, `email`) VALUES ('$SpaceNo','$datetime','$status','$Remark','$user')";
-          if (!mysqli_query($con, $qry)) {
-            die('Error: ' . mysqli_error($con));
-          } else {
-            // echo "Your record Added Successfully";
-            $check = mysqli_query($con, "SELECT * FROM `parking_slots` WHERE `status`!= 'Active'");
-            $checkrows = mysqli_num_rows($check);
-            if ($checkrows > 0) {
-              $qry1 = "UPDATE `parking_slots` SET `status`='$status',`email`='$user' WHERE `parking_slot`='$SpaceNo'";
+        $check = mysqli_query($con, "SELECT * FROM `parking_slots` WHERE `status`!= 'Active' AND `email`='$user'");
+        $checkrows = mysqli_num_rows($check);
+        if ($checkrows > 0) {
+          if ($nowtime >= $start && $nowtime <= $end) {
+            $qry = "INSERT INTO `booking_parking`(`space_no`, `vehicle_entering`, `status`, `remark`, `email`) VALUES ('$SpaceNo','$datetime','$status','$Remark','$user')";
+            $qry1 = "UPDATE `parking_slots` SET `status`='$status',`email`='$user' WHERE `parking_slot`='$SpaceNo'";
 
-              if (!mysqli_query($con, $qry1)) {
-                die('Error: ' . mysqli_error($con));
-              }
-              echo "Your record Added Successfully";
-            } else {
-              echo "Error - Please Check Parking Slot";
-            }
+            mysqli_query($con, $qry);
+
+            $result = mysqli_query($con, $qry1)
+              or die('Error: ' . mysqli_error($con));
+            echo "Your record Added Successfully";
+            echo "<script>location.href='dashboard_Customer.php';</script>";
+          } else {
+            echo "Please go through the conditions";
           }
         } else {
-          echo "Please go through the conditions";
+          echo "Error - Please Check Parking Slot";
         }
       }
       ?>

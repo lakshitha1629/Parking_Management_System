@@ -38,6 +38,11 @@
       <a class="nav-link" href="Parking_Details_Log.php">
         <i class="fas fa-fw fa-table"></i>
         <span>Parking Details Log</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="Payment_Management.php">
+        <i class="fas fa-file-invoice-dollar"></i>
+        <span>Payment Management</span></a>
     </li>';
     } else {
       echo '
@@ -50,6 +55,11 @@
       <a class="nav-link" href="Parking_Spaces_Requests.php">
         <i class="fas fa-comments"></i>
         <span>Parking Spaces Requests</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="Smart_Wallet.php">
+      <i class="fab fa-google-wallet"></i>
+        <span>Smart Wallet</span></a>
     </li>';
     }
     ?>
