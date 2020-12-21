@@ -52,7 +52,7 @@
                     content: data,
                     type: 'green',
                     typeAnimated: true,
-                    autoClose: 'tryAgain|5000',
+                    autoClose: 'tryAgain|15000',
                     buttons: {
                         tryAgain: {
                             text: 'OK',

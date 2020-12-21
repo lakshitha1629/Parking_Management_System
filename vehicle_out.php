@@ -34,7 +34,7 @@ if (isset($_POST['id'])) {
 
     $result = mysqli_query($con, $qry1)
         or die('Error: ' . mysqli_error($con));
-    $response = "Parking Fee Rs " . $cost;
+    $response = "Car Exited the Parking  System.<br> <strong style='font-size: 20px;'>Parking Fee Rs " . $cost . "</strong>";
 
     echo json_encode($response);
 }

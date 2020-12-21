@@ -160,7 +160,7 @@ function fill_product($con)
 
       require_once('connect.php');
       $user = $_SESSION['email'];
-      $qry3 = "SELECT * FROM parking_details WHERE `vehicle_out` IS NULL";
+      $qry3 = "SELECT * FROM parking_details WHERE `vehicle_out` IS NULL AND `remark`!='Automate QR BOT'";
 
       echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
