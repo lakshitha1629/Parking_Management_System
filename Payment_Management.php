@@ -30,14 +30,14 @@
                     echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
-                                <th>User ID</th>
+                                <th>Date and Time</th>
                                 <th>Email</th>
                                 <th>Price</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>User ID</th>
+                                <th>Date and Time</th>
                                 <th>Email</th>
                                 <th>Price</th>
                             </tr>
@@ -45,7 +45,7 @@
 
                     if ($res = $con->query($qry3)) {
                         while ($row = $res->fetch_assoc()) {
-                            $field1name = $row["user_id"];
+                            $field1name = $row["date"];
                             $field2name = $row["email"];
                             $field3name = $row["price"];
 

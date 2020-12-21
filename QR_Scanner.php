@@ -1,5 +1,4 @@
 <?php include 'common/header.php'; ?>
-<!-- <meta http-equiv="refresh" content="900"> -->
 
 <?php include 'common/navigation.php'; ?>
 
@@ -36,14 +35,14 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <tbody>
-                                <?php
 
-                                require_once('connect.php');
-                                $user = $_SESSION['email'];
-                                $qry3 = "SELECT * FROM parking_details JOIN user_account ON parking_details.vehicle_no = user_account.number_plate  WHERE parking_details.vehicle_out IS NULL";
+                            <?php
 
-                                echo '<thead>
+                            require_once('connect.php');
+                            $user = $_SESSION['email'];
+                            $qry3 = "SELECT * FROM parking_details JOIN user_account ON parking_details.vehicle_no = user_account.number_plate  WHERE parking_details.vehicle_out IS NULL";
+
+                            echo '<thead>
                                             <tr>
                                                 <th>Vehicle No</th>
                                                 <th>Vehicle Categorie</th>
@@ -68,19 +67,19 @@
                                             </tr>
                                         </tfoot>';
 
-                                if ($res = $con->query($qry3)) {
-                                    while ($row = $res->fetch_assoc()) {
-                                        $field1name = $row["vehicle_no"];
-                                        $field2name = $row["vehicle_categorie"];
-                                        $field3name = $row["name"];
-                                        $field4name = $row["email"];
-                                        $field5name = $row["vehicle_type"];
+                            if ($res = $con->query($qry3)) {
+                                while ($row = $res->fetch_assoc()) {
+                                    $field1name = $row["vehicle_no"];
+                                    $field2name = $row["vehicle_categorie"];
+                                    $field3name = $row["name"];
+                                    $field4name = $row["email"];
+                                    $field5name = $row["vehicle_type"];
 
-                                        $field6name = $row["phone"];
-                                        $field7name = $row["vehicle_in"];
-                                        $field8name = $row["vehicle_out"];
+                                    $field6name = $row["phone"];
+                                    $field7name = $row["vehicle_in"];
+                                    $field8name = $row["vehicle_out"];
 
-                                        echo "<tr> 
+                                    echo "<tr> 
                                             <td>" . $field1name . "</td> 
                                             <td>" . $field2name . "</td> 
                                             <td>" . $field3name . "</td> 
@@ -90,11 +89,11 @@
                                             <td>" . $field7name . "</td> 
                                             <td>" . $field8name . "</td> 
                                         </tr>";
-                                    }
-
-                                    $res->free();
                                 }
-                                ?>
+
+                                $res->free();
+                            }
+                            ?>
 
                         </table>
                     </div>
@@ -116,17 +115,6 @@
     window.setTimeout(function() {
         location.reload();
     }, 4000);
-
-    // $(document).ready(function() {
-    //     var dataTable = $('#genytable').DataTable({
-    //         "processing": true,
-    //         "serverSide": true,
-    //         "ajax": {
-    //             url: "Select_QR_Scanner.php",
-    //             type: "post"
-    //         }
-    //     });
-    // });
 </script>
 
 <script>

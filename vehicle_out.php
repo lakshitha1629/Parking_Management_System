@@ -1,26 +1,41 @@
 <?php
-require_once('connect.php');
+include('functions.php');
+if (!isLoggedIn()) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: index.php');
+}
 
-$id = $_GET['id']; // $id is now defined
-$SpaceNo = $_GET['ParkingSlot'];
-
+$user = $_SESSION['email'];
 date_default_timezone_set('Asia/Colombo');
 $date = date('Y-m-d H:i:s');
 $vehicle_out = $date;
 $status = 'Inactive';
 $email = ' ';
 
-// mysqli_query($con, "UPDATE `parking_details` SET `vehicle_out`='$vehicle_out' WHERE `p_no` = '" . $id . "' ");
+if (isset($_POST['id'])) {
+    $id = $_POST['id']; // $id is now defined
+    $SpaceNo = $_POST['ParkingSlot'];
+    $VehicleIn_pre = $_POST['VehicleIn'];
+    $VehicleIn = date('Y-m-d H:i:s', $VehicleIn_pre);
+    $timediff = strtotime($vehicle_out) - strtotime($VehicleIn);
 
-// $qry = "UPDATE `parking_details` SET `vehicle_out`='$vehicle_out' WHERE `p_no`= '$VehicleNo'";
-$qry1 = "UPDATE `parking_details` SET `vehicle_out`='$vehicle_out' WHERE `p_no` = '" . $id . "'";
-$qry = "UPDATE `parking_slots` SET `status`='$status',`email`='$email' WHERE `parking_slot`='" . $SpaceNo . "'";
+    if ($timediff <= 7200) {
+        $cost = 50;
+    } else {
+        $cost = (($timediff - 7200) * 2) + 50;
+    }
 
-mysqli_query($con, $qry);
+    $qry2 = "INSERT INTO `smart_wallet`(`date`, `email`, `price`) VALUES ('$vehicle_out', '$user', '$cost')";
+    $qry1 = "UPDATE `parking_details` SET `vehicle_out`='$vehicle_out' WHERE `p_no` = '" . $id . "'";
+    $qry = "UPDATE `parking_slots` SET `status`='$status',`email`='$email' WHERE `parking_slot`='" . $SpaceNo . "'";
 
-$result = mysqli_query($con, $qry1)
-    or die('Error: ' . mysqli_error($con));
-echo "Your record Added Successfully";
+    mysqli_query($con, $qry);
+    mysqli_query($con, $qry2);
 
-// mysqli_close($con);
-header("Location: dashboard.php");
+    $result = mysqli_query($con, $qry1)
+        or die('Error: ' . mysqli_error($con));
+    $response = "Parking Fee Rs " . $cost;
+
+    echo json_encode($response);
+}
+exit;

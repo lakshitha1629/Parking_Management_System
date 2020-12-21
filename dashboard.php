@@ -191,17 +191,17 @@ function fill_product($con)
           $field2name = $row["vehicle_categorie"];
           $field3name = $row["remark"];
           $field4name = $row["vehicle_in"];
+          $intime = strtotime($field4name);
 
           echo "<tr> 
                   <td>" . $field1name . "</td> 
                   <td>" . $field2name . "</td> 
                   <td>" . $field3name . "</td> 
                   <td>" . $field4name . "</td> 
-                  <td><a onClick=\"return confirm('Are you sure " . $row['vehicle_no'] . " Vehicle Exit?')\" href=\"vehicle_out.php?id=" . $row['p_no'] . "&ParkingSlot=" . $row['parking_slot'] . "\"><button type='button' class='btn btn-secondary btn-xs'>Vehicle Exit</button></a>
+                  <td><button onclick='exitfunction(" .  $id . " ," .  $ParkingSlot . "," .  $intime . ")' type='button' class='btn btn-secondary btn-xs'>Vehicle Exit</button>
                   </td>
                 </tr>";
         }
-
         $res->free();
       }
       ?>
@@ -217,6 +217,67 @@ function fill_product($con)
 <!-- End of Main Content -->
 
 <?php include 'common/footer.php'; ?>
+
+<script type="text/javascript">
+  function exitfunction(p1, p2, p3) {
+    $.confirm({
+      title: 'Confirm!',
+      content: 'Are you sure you want to exit vehicle?',
+      buttons: {
+        confirm: function() {
+          $.ajax({
+            url: "vehicle_out.php",
+            type: 'post',
+            dataType: "json",
+            data: {
+              id: p1,
+              ParkingSlot: p2,
+              VehicleIn: p3
+            },
+            success: function(data) {
+              $.confirm({
+                title: 'Success!',
+                content: data,
+                type: 'green',
+                typeAnimated: true,
+                autoClose: 'tryAgain|15000',
+                buttons: {
+                  tryAgain: {
+                    text: 'OK',
+                    btnClass: 'btn-green',
+                    action: function() {
+                      window.location.href = "dashboard.php";
+                    }
+                  }
+                }
+              });
+            },
+            error: function(data) {
+              $.confirm({
+                title: 'Encountered an error!',
+                content: data,
+                type: 'red',
+                typeAnimated: true,
+                autoClose: 'tryAgain|10000',
+                buttons: {
+                  tryAgain: {
+                    text: 'Try again',
+                    btnClass: 'btn-red',
+                    action: function() {}
+                  },
+                  close: function() {}
+                }
+              });
+            }
+          });
+        },
+        cancel: function() {
+          window.location.href = "dashboard.php";
+        }
+      }
+    });
+  }
+</script>
 
 <script>
   $("#VehicleNo").autocomplete({

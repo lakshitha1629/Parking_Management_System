@@ -20,8 +20,9 @@ if (isset($_POST['id'])) {
         while ($data1 = $res->fetch_assoc()) {
             $VehicleNo = $data1['number_plate'];
         }
+        $ParkingSlot = '1';
 
-        $check = mysqli_query($con, "SELECT * FROM `parking_details` WHERE `vehicle_no`='$VehicleNo' AND `vehicle_out` IS NULL");
+        $check = mysqli_query($con, "SELECT * FROM `parking_details` WHERE `vehicle_no`='$VehicleNo', `parking_slot`='$ParkingSlot' AND `vehicle_out` IS NULL");
         $checkrows = mysqli_num_rows($check);
         if ($checkrows > 0) {
             $qry1 = "UPDATE `parking_details` SET `vehicle_out`='$vehicle_out' WHERE `vehicle_no` = '$VehicleNo'";
@@ -30,7 +31,7 @@ if (isset($_POST['id'])) {
             }
             $response = "Car Exited the Parking  System.";
         } else {
-            $qry2 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories ','$Remark','$vehicle_in')";
+            $qry2 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`,`parking_slot`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories ','$Remark','$ParkingSlot','$vehicle_in')";
             if (!mysqli_query($con, $qry2)) {
                 die('Error: ' . mysqli_error($con));
             }
