@@ -174,7 +174,7 @@ function fill_product($con)
             $result = mysqli_query($con, $qry1)
               or die('Error: ' . mysqli_error($con));
             echo "Your record Added Successfully";
-            echo "<script>location.href='dashboard_Customer.php';</script>";
+            echo "<script type='text/javascript'>location.href='dashboard_Customer.php';</script>";
           } else {
             echo "Please go through the conditions";
           }

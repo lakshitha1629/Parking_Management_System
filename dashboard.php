@@ -139,7 +139,7 @@ function fill_product($con)
         $result = mysqli_query($con, $qry2)
           or die('Error: ' . mysqli_error($con));
         echo "Your record Added Successfully";
-        echo "<script>location.href='dashboard.php';</script>";
+        echo "<script type='text/javascript'>location.href='dashboard.php';</script>";
       }
     }
 
