@@ -25,7 +25,7 @@
 
                     require_once('connect.php');
                     $user = $_SESSION['email'];
-                    $qry3 = "SELECT * FROM `smart_wallet`";
+                    $qry3 = "SELECT * FROM `smart_wallet` ORDER BY `id` DESC";
 
                     echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>

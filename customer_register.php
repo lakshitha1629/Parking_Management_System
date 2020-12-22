@@ -73,6 +73,10 @@
 
                             if (isset($_POST['reg_btn'])) {
                                 require_once('connect.php');
+
+                                date_default_timezone_set('Asia/Colombo');
+                                $date = date('Y-m-d H:i:s');
+
                                 //$date = $_POST['date'];
                                 $user_id = uniqid();
                                 $name = $_POST['FirstName'] . ' ' . $_POST['LastName'];
@@ -101,11 +105,12 @@
                                 } else {
                                     $password = md5($password1);
                                     $qry = "INSERT INTO `user_account`(`user_id`,`name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`) VALUES ('$user_id','$name','$Email','$type','$password','$active','$VehicleNumberPlate','$VehicleTypes','$PhoneNumber')";
-                                    // echo $qry;
+                                    $qry1 = "INSERT INTO `smart_wallet`(`date`, `email`, `price`) VALUES ('$date', '$Email', '1000')";
 
-                                    if (!mysqli_query($con, $qry)) {
-                                        die('Error: ' . mysqli_error($con));
-                                    }
+                                    mysqli_query($con, $qry1);
+                                    $result = mysqli_query($con, $qry)
+                                        or die('Error: ' . mysqli_error($con));
+
                                     echo "Registration Successfull";
                                     echo "<script>location.href='index.php';</script>";
                                 }

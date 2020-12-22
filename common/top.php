@@ -95,11 +95,11 @@
                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
                                                                     require_once('connect.php');
                                                                     $date3 = date('Y-m-d');
-                                                                    $qry = "SELECT SUM(`price`) as d FROM `smart_wallet` GROUP BY `date`=MONTH(NOW())";
+                                                                    $qry = "SELECT SUM(`price`) as d FROM `smart_wallet` WHERE `price` <= 0 GROUP BY `date`=MONTH(NOW())";
 
                                                                     $res = $con->query($qry);
                                                                     while ($data1 = $res->fetch_assoc()) {
-                                                                      echo 'Rs. ' . $data1['d'];
+                                                                      echo 'Rs. ' . (abs($data1['d']));
                                                                     }
                                                                     ?></div>
               </div>

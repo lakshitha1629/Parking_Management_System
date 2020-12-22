@@ -25,7 +25,7 @@ if (isset($_POST['id'])) {
         $cost = (($timediff - 7200) * 2) + 50;
     }
 
-    $qry2 = "INSERT INTO `smart_wallet`(`date`, `email`, `price`) VALUES ('$vehicle_out', '$user', '$cost')";
+    $qry2 = "INSERT INTO `smart_wallet`(`date`, `email`, `price`) VALUES ('$vehicle_out', '$user', '-$cost')";
     $qry1 = "UPDATE `parking_details` SET `vehicle_out`='$vehicle_out' WHERE `p_no` = '" . $id . "'";
     $qry = "UPDATE `parking_slots` SET `status`='$status',`email`='$email' WHERE `parking_slot`='" . $SpaceNo . "'";
 

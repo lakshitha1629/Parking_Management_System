@@ -23,13 +23,19 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Available Balance</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                                // date_default_timezone_set('Asia/Colombo');
-                                                                                // $time = date('Y-m-d');
-                                                                                // echo $time;
+                                                                                require_once('connect.php');
+                                                                                $user = $_SESSION['email'];
+                                                                                $date3 = date('Y-m-d');
+                                                                                $qry = "SELECT SUM(`price`) as d FROM `smart_wallet` WHERE `email`='$user'";
+
+                                                                                $res = $con->query($qry);
+                                                                                while ($data1 = $res->fetch_assoc()) {
+                                                                                    echo 'Rs. ' . $data1['d'];
+                                                                                }
                                                                                 ?></div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-calculator fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -45,18 +51,19 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Last Payment</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                                // require_once('connect.php');
-                                                                                // $date3 = date('Y-m-d');
-                                                                                // $qry = "SELECT COUNT(`request`) as d FROM `total_geny_records` WHERE `request`='Pending..'";
+                                                                                require_once('connect.php');
+                                                                                $user = $_SESSION['email'];
+                                                                                $date3 = date('Y-m-d');
+                                                                                $qry = "SELECT * FROM `smart_wallet` WHERE `email` = '$user' ORDER BY `date` DESC LIMIT 1";
 
-                                                                                // $res = $con->query($qry);
-                                                                                // while ($data1 = $res->fetch_assoc()) {
-                                                                                //   echo $data1['d'];
-                                                                                // }
+                                                                                $res = $con->query($qry);
+                                                                                while ($data1 = $res->fetch_assoc()) {
+                                                                                    echo 'Rs. ' . $data1['price'];
+                                                                                }
                                                                                 ?></div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-battery-quarter fa-2x text-gray-300"></i>
+                            <i class="fas fa-calculator fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -76,19 +83,19 @@
 
                     require_once('connect.php');
                     $user = $_SESSION['email'];
-                    $qry3 = "SELECT * FROM `smart_wallet`";
+                    $qry3 = "SELECT * FROM `smart_wallet` WHERE `email` = '$user'";
 
                     echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
-                                <th>User ID</th>
+                                <th>Date and Time</th>
                                 <th>Email</th>
                                 <th>Price</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>User ID</th>
+                                <th>Date and Time</th>
                                 <th>Email</th>
                                 <th>Price</th>
                             </tr>
@@ -96,7 +103,7 @@
 
                     if ($res = $con->query($qry3)) {
                         while ($row = $res->fetch_assoc()) {
-                            $field1name = $row["user_id"];
+                            $field1name = $row["date"];
                             $field2name = $row["email"];
                             $field3name = $row["price"];
 

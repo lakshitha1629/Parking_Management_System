@@ -8,14 +8,17 @@
 <?php
 require_once('connect.php');
 
+
 function fill_product($con)
 {
   $output = '';
   $sql = "SELECT * FROM `parking_slots`";
   $result = mysqli_query($con, $sql);
   while ($row = mysqli_fetch_array($result)) {
+    $user = $_SESSION['email'];
     $field01name = $row["parking_slot"];
     $field02name = $row["status"];
+    $fieldemail = $row["email"];
 
     if ($field02name == "Active") {
       $field03name = "bg-danger";
@@ -26,11 +29,18 @@ function fill_product($con)
       // $field03name = "bg-light";
     }
 
+    if ($fieldemail == $user) {
+      $field04name = "Your";
+    } else {
+      $field04name = "";
+    }
+
     $output .= '
         <div class="col-lg-2 mb-4">
           <div class="card ' . $field03name . ' text-white shadow">
             <div class="card-body text-center">
             ' . $field01name . '
+            ' . $field04name . '
             </div>
           </div>
         </div>';
@@ -169,7 +179,7 @@ function fill_product($con)
             echo "Please go through the conditions";
           }
         } else {
-          echo "Error - Please Check Parking Slot";
+          echo "Error - you're already haven Parking Slot";
         }
       }
       ?>

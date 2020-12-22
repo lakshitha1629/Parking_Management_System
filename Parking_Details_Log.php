@@ -25,7 +25,7 @@
 
                     require_once('connect.php');
                     $user = $_SESSION['email'];
-                    $qry3 = "SELECT * FROM parking_details JOIN user_account ON parking_details.vehicle_no = user_account.number_plate";
+                    $qry3 = "SELECT * FROM parking_details JOIN user_account ON parking_details.vehicle_no = user_account.number_plate ORDER BY `p_no` DESC";
 
                     echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
