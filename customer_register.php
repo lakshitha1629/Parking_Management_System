@@ -1,10 +1,3 @@
-<?php
-include('functions.php');
-if (!isLoggedIn()) {
-    $_SESSION['msg'] = "You must log in first";
-    header('location: index.php');
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -119,8 +112,12 @@ if (!isLoggedIn()) {
                                     $result = mysqli_query($con, $qry1)
                                         or die('Error: ' . mysqli_error($con));
 
-                                    header("location: login.php");
+                                    // header("location: login.php");
                                     // echo "Registration Successfull";
+
+                                    echo "<br><div class='form'>
+                                            You are registered successfully. Click here to <a href='index.php'>Login</a>
+                                        </div>";
                                 }
                             }
                             ?>
