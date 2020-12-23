@@ -18,7 +18,8 @@ if (isset($_POST['reg_btn'])) {
     $active = '1';
 
     // QR Code
-    include './phpqrcode/qrlib.php';
+    require_once('./phpqrcode/qrlib.php');
+    // include './phpqrcode/qrlib.php';
     $path = 'images/QR/';
     $QR_Code = $path . $user_id . ".png";
     $ecc = 'L';
