@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 22, 2020 at 12:14 PM
+-- Generation Time: Dec 28, 2020 at 09:00 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `booking_parking` (
   `remark` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`booking_no`)
-) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ INSERT INTO `parking_slots` (`parking_slot`, `status`, `email`) VALUES
 (3, 'Inactive', ''),
 (4, 'Inactive', ''),
 (5, 'Inactive', ''),
-(6, 'Reserved', ''),
+(6, 'Inactive', ''),
 (7, 'Inactive', ' '),
 (8, 'Inactive', ''),
 (9, 'Inactive', ''),
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `smart_wallet` (
   `email` varchar(50) NOT NULL DEFAULT '',
   `price` int(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -130,9 +130,7 @@ CREATE TABLE IF NOT EXISTS `user_account` (
 --
 
 INSERT INTO `user_account` (`user_id`, `name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`) VALUES
-('1', 'admin', 'admin@gmail.com', 1, '81dc9bdb52d04dc20036dbd8313ed055', 1, NULL, NULL, NULL),
-('5fbabb7fadaec', 'lakshitha perera', 'lakshitha1629@gmail.com', 2, '81dc9bdb52d04dc20036dbd8313ed055', 1, '64-9236', 'Car', 714799841),
-('5fd464d67d213', 'ishantha jayathilaka', 'ishanthajayathilaka@gmail.com', 2, '81dc9bdb52d04dc20036dbd8313ed055', 1, 'GL-0081', 'Van', 779488719);
+('1', 'admin', 'admin@gmail.com', 1, '81dc9bdb52d04dc20036dbd8313ed055', 1, NULL, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

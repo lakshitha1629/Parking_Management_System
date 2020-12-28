@@ -162,9 +162,12 @@ function fill_product($con)
         $end = strtotime($_POST['datetime'] . ':00');
         $start = $end - (2 * 60 * 60);
 
-        $check = mysqli_query($con, "SELECT * FROM `parking_slots` WHERE `status`!= 'Active' AND `email`='$user'");
+        $check = mysqli_query($con, "SELECT * FROM `parking_slots` WHERE (`status`= 'Reserved' AND `email`='$user') OR (`status`= 'Active' AND `email`='$user')");
         $checkrows = mysqli_num_rows($check);
         if ($checkrows > 0) {
+
+          echo "Error - you're already haven Parking Slot";
+        } else {
           if ($nowtime >= $start && $nowtime <= $end) {
             $qry = "INSERT INTO `booking_parking`(`space_no`, `vehicle_entering`, `status`, `remark`, `email`) VALUES ('$SpaceNo','$datetime','$status','$Remark','$user')";
             $qry1 = "UPDATE `parking_slots` SET `status`='$status',`email`='$user' WHERE `parking_slot`='$SpaceNo'";
@@ -178,8 +181,6 @@ function fill_product($con)
           } else {
             echo "Please go through the conditions";
           }
-        } else {
-          echo "Error - you're already haven Parking Slot";
         }
       }
       ?>

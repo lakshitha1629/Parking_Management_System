@@ -13,7 +13,7 @@ if (!empty($_POST['sendval']) && !empty($_POST['sendval2'])) {
     $space_no = $_POST['sendval'];
 
     // Update your tablename here
-    $sql = "UPDATE `parking_slot` SET `vehicle_entering`='$time',`status`='$val2' WHERE `space_no`= '$space_no'";
+    $sql = "UPDATE `parking_slots` SET `status`='$val2' WHERE `parking_slot`= '$space_no'";
 
     if ($con->query($sql) === TRUE) {
         echo "Values inserted in MySQL database table.";
