@@ -54,7 +54,7 @@
     <li class="nav-item">
       <a class="nav-link" href="Parking_Spaces_Requests.php">
         <i class="fas fa-comments"></i>
-        <span>Parking Spaces Requests</span></a>
+        <span>Booking Details Log</span></a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="Smart_Wallet.php">

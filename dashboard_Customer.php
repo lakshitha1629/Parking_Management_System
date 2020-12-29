@@ -157,6 +157,8 @@ function fill_product($con)
         date_default_timezone_set('Asia/Colombo');
         $time = date('H:i:s');
 
+        $date = date('Y-m-d H:i:s');
+
         $nowtime = strtotime($time);
 
         $end = strtotime($_POST['datetime'] . ':00');
@@ -169,7 +171,7 @@ function fill_product($con)
           echo "Error - you're already haven Parking Slot";
         } else {
           if ($nowtime >= $start && $nowtime <= $end) {
-            $qry = "INSERT INTO `booking_parking`(`space_no`, `vehicle_entering`, `status`, `remark`, `email`) VALUES ('$SpaceNo','$datetime','$status','$Remark','$user')";
+            $qry = "INSERT INTO `booking_parking`(`date`,`space_no`, `vehicle_entering`, `status`, `remark`, `email`,`book_status`) VALUES ('$date','$SpaceNo','$datetime','$status','$Remark','$user','Booked')";
             $qry1 = "UPDATE `parking_slots` SET `status`='$status',`email`='$user' WHERE `parking_slot`='$SpaceNo'";
 
             mysqli_query($con, $qry);
@@ -198,7 +200,7 @@ function fill_product($con)
         <?php
         require_once('connect.php');
         $user = $_SESSION['email'];
-        $qry = "SELECT * FROM `booking_parking` WHERE `email`='$user'";
+        $qry = "SELECT * FROM `booking_parking` WHERE `email`='$user' AND `book_status`!='Canceled' ORDER BY `booking_no` DESC LIMIT 1";
 
         echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>   
@@ -208,11 +210,13 @@ function fill_product($con)
                   <th>Status</th>
                   <th>Remark</th>
                   <th>Email</th>
+                  <th></th>
                 </tr>
               </thead>';
 
         if ($res = $con->query($qry)) {
           while ($row = $res->fetch_assoc()) {
+            $field0name = $row["booking_no"];
             $field1name = $row["space_no"];
             $field2name = $row["vehicle_entering"];
             $field3name = $row["status"];
@@ -225,6 +229,9 @@ function fill_product($con)
                     <td>" . $field3name . "</td> 
                     <td>" . $field4name . "</td> 
                     <td>" . $field5name . "</td>
+                    <td>
+                    <a onClick=\"return confirm('Are you sure you want to delete?')\" href=\"delete_Booking_Requestor.php?id=" . $field0name . "&space_no=" . $field1name . "\" class=''><i class='fa fa-window-close' style='font-size:18px;color:red'></i></a>
+                    </td>
                 </tr>";
           }
 

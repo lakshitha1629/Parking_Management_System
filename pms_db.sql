@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 28, 2020 at 09:00 PM
+-- Generation Time: Dec 29, 2020 at 06:18 AM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -30,13 +30,15 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `booking_parking`;
 CREATE TABLE IF NOT EXISTS `booking_parking` (
   `booking_no` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
   `space_no` int(10) NOT NULL,
   `vehicle_entering` time NOT NULL,
   `status` varchar(20) NOT NULL,
   `remark` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `book_status` varchar(20) NOT NULL,
   PRIMARY KEY (`booking_no`)
-) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -101,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `smart_wallet` (
   `email` varchar(50) NOT NULL DEFAULT '',
   `price` int(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
