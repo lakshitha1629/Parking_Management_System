@@ -1,3 +1,7 @@
+<?php
+@ob_start();
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,8 +64,6 @@
                         <input class="login100-form-btn" id="but_submit" name="login_btn" type="submit" value="Login" />
 
                         <?php
-                        session_start();
-
                         require_once('connect.php');
 
                         // call the login() function if register_btn is clicked

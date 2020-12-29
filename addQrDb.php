@@ -55,7 +55,7 @@ if (isset($_POST['id'])) {
             $response = "Car Exited the Parking  System.<br> <strong style='font-size: 20px;'>Parking Fee Rs " . $cost . "</strong>";
         } else {
             $qry2 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`,`parking_slot`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories ','$Remark','$ParkingSlot','$vehicle_in')";
-            $qry22 = "UPDATE `parking_slots` SET `status`='Active',`email`='$email' WHERE `parking_slot`='" . $ParkingSlot . "'";
+            $qry22 = "UPDATE `parking_slots` SET `status`='Reserved',`email`='$email' WHERE `parking_slot`='" . $ParkingSlot . "'";
 
             mysqli_query($con, $qry22);
             $result = mysqli_query($con, $qry2)
