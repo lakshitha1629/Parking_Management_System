@@ -17,11 +17,21 @@
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">QR Code Reader</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Entrance / Exit</h6>
                 </div>
                 <div class="card-body">
                     <!-- <video id="preview"></video> -->
                     <button type="button" class="btn btn-light" onclick="myFunction()"><i class="fa fa-qrcode" aria-hidden="true" style="font-size:145px;color: indigo;"></i></button>
+
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Parking Space </h6>
+                </div>
+                <div class="card-body">
+                    <!-- <video id="preview"></video> -->
+                    <button type="button" class="btn btn-light" onclick="myFunction2()"><i class="fa fa-qrcode" aria-hidden="true" style="font-size:145px;color: darkorange;"></i></button>
 
                 </div>
             </div>
@@ -120,5 +130,9 @@
 <script>
     function myFunction() {
         var myWindow = window.open("QR.php", "", "width=450,height=550");
+    }
+
+    function myFunction2() {
+        var myWindow = window.open("QR_sp.php", "", "width=450,height=550");
     }
 </script>

@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">QR Scanner (Entrance / Exit)</h1>
+        <h1 class="h3 mb-0 text-gray-800">QR Scanner (Parking Space)</h1>
     </div>
     <!-- Content Row -->
     <div class="row">
@@ -20,11 +20,27 @@
                         <video class="embed-responsive-item" id="preview">
                         </video>
                     </div>
-                    <canvas id="myCanvas" width="150" height="150" style="border: 1.5px solid blueviolet;position: absolute;bottom: 124px;top: 124px;right: 124px;left: 124px;">
+                    <canvas id="myCanvas" width="150" height="150" style="border: 1.5px solid #fd7e14;position: absolute;bottom: 124px;top: 124px;right: 124px;left: 124px;">
                     </canvas>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-2 mb-3">
+        <label>Parking Slot :</label>
+        <select name="ParkingSlot" id="ParkingSlot" class="form-control" required>
+            <?php
+            require_once('connect.php');
+
+            $sql_slot = "SELECT * FROM `parking_slots`";
+            $result_slot = mysqli_query($con, $sql_slot);
+            while ($row_slot = mysqli_fetch_array($result_slot)) {
+                $parking_slot = $row_slot["parking_slot"];
+
+                echo "<option value='" . $parking_slot . "'>" . $parking_slot . "</option>";
+            }
+            ?>
+        </select>
     </div>
     <!-- /.container-fluid -->
 
@@ -38,13 +54,17 @@
     let scanner = new Instascan.Scanner({
         video: document.getElementById('preview')
     });
+    var slot = document.getElementById("ParkingSlot").value;
+
+
     scanner.addListener('scan', function(content) {
         $.ajax({
-            url: "addQrDb.php",
+            url: "addQrDb_sp.php",
             type: 'post',
             dataType: "json",
             data: {
-                id: content
+                id: content,
+                slot: $("#ParkingSlot").val()
             },
             success: function(data) {
                 $.confirm({
@@ -52,7 +72,7 @@
                     content: data,
                     type: 'green',
                     typeAnimated: true,
-                    autoClose: 'tryAgain|15000',
+                    autoClose: 'tryAgain|10000',
                     buttons: {
                         tryAgain: {
                             text: 'OK',
@@ -65,7 +85,7 @@
             error: function(data) {
                 $.confirm({
                     title: 'Encountered an error!',
-                    content: 'Something went downhill, this may be serious',
+                    content: 'Something went downhill, Pleace check your parking slot',
                     type: 'red',
                     typeAnimated: true,
                     autoClose: 'tryAgain|10000',

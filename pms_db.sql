@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 29, 2020 at 06:18 AM
+-- Generation Time: Dec 31, 2020 at 04:52 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `parking_details` (
   `vehicle_in` datetime NOT NULL,
   `vehicle_out` datetime DEFAULT NULL,
   PRIMARY KEY (`p_no`)
-) ENGINE=MyISAM AUTO_INCREMENT=127 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=131 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `parking_slots` (
   `parking_slot` int(11) NOT NULL,
   `status` varchar(20) NOT NULL,
   `email` varchar(50) NOT NULL DEFAULT '',
+  `slot_status` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`parking_slot`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -76,19 +77,19 @@ CREATE TABLE IF NOT EXISTS `parking_slots` (
 -- Dumping data for table `parking_slots`
 --
 
-INSERT INTO `parking_slots` (`parking_slot`, `status`, `email`) VALUES
-(1, 'Inactive', ''),
-(2, 'Inactive', ''),
-(3, 'Inactive', ''),
-(4, 'Inactive', ''),
-(5, 'Inactive', ''),
-(6, 'Inactive', ''),
-(7, 'Inactive', ' '),
-(8, 'Inactive', ''),
-(9, 'Inactive', ''),
-(10, 'Inactive', ''),
-(11, 'Inactive', ''),
-(12, 'Inactive', '');
+INSERT INTO `parking_slots` (`parking_slot`, `status`, `email`, `slot_status`) VALUES
+(1, 'Inactive', '', 0),
+(2, 'Inactive', '', 0),
+(3, 'Inactive', '', 0),
+(4, 'Inactive', '', 0),
+(5, 'Inactive', '', 0),
+(6, 'Inactive', '', 0),
+(7, 'Inactive', ' ', 0),
+(8, 'Inactive', '', 0),
+(9, 'Inactive', '', 0),
+(10, 'Inactive', '', 0),
+(11, 'Inactive', '', 0),
+(12, 'Inactive', '', 0);
 
 -- --------------------------------------------------------
 
@@ -103,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `smart_wallet` (
   `email` varchar(50) NOT NULL DEFAULT '',
   `price` int(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=71 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 

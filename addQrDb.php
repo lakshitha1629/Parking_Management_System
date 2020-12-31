@@ -40,7 +40,7 @@ if (isset($_POST['id'])) {
             if ($timediff <= 7200) {
                 $cost = 50;
             } else {
-                $cost = (($timediff - 7200) * 2) + 50;
+                $cost = round(($timediff / 7200) * 50);
             }
 
             $qry0 = "INSERT INTO `smart_wallet`(`date`, `email`, `price`) VALUES ('$vehicle_out', '$email', '-$cost')";
