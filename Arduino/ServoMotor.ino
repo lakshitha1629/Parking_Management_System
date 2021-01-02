@@ -8,7 +8,7 @@
 Servo servo1;
 Servo servo2;
 
-String space_no = "1";
+String ent_exi = "1";
 
 void setup()
 {
@@ -45,9 +45,9 @@ void loop()
 
     String GetAddress, LinkGet, getData;
 
-    GetAddress = "http://myparkbot.000webhostapp.com/NodeMCU_Get_Servo.php";
+    GetAddress = "http://myparkbot.000webhostapp.com/NodeMCU_Get_En_Ex.php";
     LinkGet = GetAddress; //--> Make a Specify request destination
-    getData = "ID=" + space_no;
+    getData = "ID=" + ent_exi;
     Serial.println("----------------Connect to Server-----------------");
     Serial.println("Get LED Status from Server or Database");
     Serial.print("Request Link : ");
@@ -65,10 +65,14 @@ void loop()
     {
         servo1.write(180);
         delay(1000);
+        servo1.write(90);
+        delay(1000);
     }
     else
     {
-        servo1.write(90);
+        servo2.write(180);
+        delay(1000);
+        servo2.write(90);
         delay(1000);
     }
     //----------------------------------------

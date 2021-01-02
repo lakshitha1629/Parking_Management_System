@@ -10,6 +10,7 @@ const int echoPin = D3; //D3
 int ledPin2 = D0;       //D0 Green
 int ledPin3 = D1;       //D1 Red
 int ledPin4 = D2;       //D2 yellow
+Servo servo1;           //Slot servo
 // defines variables
 long duration;
 int distance;
@@ -23,6 +24,10 @@ String sendval, sendval2, postData;
 void setup()
 {
     Serial.begin(9600);
+    servo1.attach(D6); //D6 Slot servo
+    servo1.write(0);
+    delay(2000);
+
     pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
     pinMode(echoPin, INPUT);  // Sets the echoPin as an Input
     pinMode(ledPin2, OUTPUT); // sets the pin as output
@@ -155,4 +160,39 @@ void loop()
     //delay(5000); //--> GET Data at every 5 seconds
 
     //----------------------------------------
+
+    HTTPClient http;
+
+    String GetAddress1, LinkGet1, getData1;
+
+    GetAddress1 = "http://myparkbot.000webhostapp.com/NodeMCU_Get_En_Ex.php";
+    LinkGet1 = GetAddress; //--> Make a Specify request destination
+    getData1 = "ID=" + space_no;
+    Serial.println(LinkGet1);
+    http.begin(LinkGet1);                                                //--> Specify request destination
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
+    int httpCodeGet = http.POST(getData1);                               //--> Send the request
+    String payloadGet1 = http.getString();                               //--> Get the response payload from server
+    Serial.print("Response Code : ");                                    //--> If Response Code = 200 means Successful connection, if -1 means connection failed. For more information see here : https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+    Serial.println(httpCodeGet);                                         //--> Print HTTP return code
+    Serial.print("Returned data from Server : ");
+    Serial.println(payloadGet1); //--> Print request response payload
+
+    if (payloadGet1 == "1")
+    {
+        servo1.write(180);
+        delay(1000);
+    }
+    else
+    {
+        servo1.write(90);
+        delay(1000);
+    }
+    //----------------------------------------
+
+    Serial.println("----------------Closing Connection----------------");
+    http.end(); //--> Close connection
+    Serial.println();
+    Serial.println("Please wait 5 seconds for the next connection.");
+    Serial.println();
 }

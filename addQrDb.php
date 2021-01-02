@@ -45,7 +45,7 @@ if (isset($_POST['id'])) {
 
             $qry0 = "INSERT INTO `smart_wallet`(`date`, `email`, `price`) VALUES ('$vehicle_out', '$email', '-$cost')";
             $qry1 = "UPDATE `parking_details` SET `vehicle_out`='$vehicle_out', `parking_slot`='$ParkingSlot' WHERE `vehicle_no` = '$VehicleNo'";
-            $qry11 = "UPDATE `parking_slots` SET `status`='Inactive',`email`='' WHERE `email`='$email'";
+            $qry11 = "UPDATE `parking_slots` SET `status`='Inactive',`email`='',`ent_exi`='0' WHERE `email`='$email'";
 
             mysqli_query($con, $qry0);
             mysqli_query($con, $qry11);
@@ -55,7 +55,7 @@ if (isset($_POST['id'])) {
             $response = "Car Exited the Parking  System.<br> <strong style='font-size: 20px;'>Parking Fee Rs " . $cost . "</strong>";
         } else {
             $qry2 = "INSERT INTO `parking_details`(`vehicle_no`, `vehicle_categorie`, `remark`,`parking_slot`, `vehicle_in`) VALUES ('$VehicleNo','$VehicleCategories ','$Remark','$ParkingSlot','$vehicle_in')";
-            $qry22 = "UPDATE `parking_slots` SET `status`='Reserved',`email`='$email' WHERE `parking_slot`='" . $ParkingSlot . "'";
+            $qry22 = "UPDATE `parking_slots` SET `status`='Reserved',`email`='$email',`ent_exi`='1' WHERE `parking_slot`='" . $ParkingSlot . "'";
 
             mysqli_query($con, $qry22);
             $result = mysqli_query($con, $qry2)
