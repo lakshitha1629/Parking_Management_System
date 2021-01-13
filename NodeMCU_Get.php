@@ -12,5 +12,9 @@ if (!empty($_POST)) {
     $data = $q->fetch(PDO::FETCH_ASSOC);
     Database::disconnect();
 
-    echo $data['status'];
+    $status = $data['status'];
+    $slot_status = $data['slot_status'];
+
+    echo $status;
+    echo $slot_status;
 }

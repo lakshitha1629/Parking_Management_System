@@ -63,7 +63,10 @@ void loop()
     HTTPClient http;
 
     sendval = String(space_no);
-    sendval2 = String(status_val);
+    if (status_val != "Null")
+    {
+        sendval2 = String(status_val);
+    }
 
     postData = "sendval=" + sendval + "&sendval2=" + sendval2;
 
@@ -109,12 +112,14 @@ void loop()
     if (distance < 10)
     {
         status_val = "Active";
+        servo1.write(0);
         digitalWrite(ledPin2, LOW);  // Order the LED on Pin2 to go off Green
         digitalWrite(ledPin3, HIGH); // Order the LED on Pin3 to light up Red
     }
     else
     {
         status_val = "Inactive";
+        servo1.write(90);
         digitalWrite(ledPin2, HIGH); // Order the LED on Pin2 to light up Green
         digitalWrite(ledPin3, LOW);  // Order the LED on Pin3 to go off Red
     }
@@ -143,13 +148,19 @@ void loop()
     Serial.print("Returned data from Server : ");
     Serial.println(payloadGet); //--> Print request response payload
 
-    if (payloadGet == "Reserved")
+    if (payloadGet == "Reserved1" || payloadGet == "Inactive1")
     {
-        digitalWrite(ledPin4, LOW); //--> Turn off Led
+        Serial.println("--> Open Slot Gate");
+        servo1.write(90);
+    }
+
+    if (payloadGet == "Reserved1" || payloadGet == "Reserved0")
+    {
+        digitalWrite(ledPin4, HIGH); //--> Turn off Led
     }
     else
     {
-        digitalWrite(ledPin4, HIGH); //--> Turn off Led
+        digitalWrite(ledPin4, LOW); //--> Turn off Led
     }
     //----------------------------------------
 
