@@ -30,7 +30,7 @@ function fill_product($con)
     }
 
     if ($fieldemail == $user) {
-      $field04name = "Your";
+      $field04name = "Yours";
     } else {
       $field04name = "";
     }

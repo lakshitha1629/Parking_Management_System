@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 02, 2021 at 02:16 PM
+-- Generation Time: Jan 18, 2021 at 06:32 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `smart_wallet` (
   `email` varchar(50) NOT NULL DEFAULT '',
   `price` int(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=78 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -124,6 +124,7 @@ CREATE TABLE IF NOT EXISTS `user_account` (
   `number_plate` varchar(11) DEFAULT '',
   `vehicle_type` varchar(20) DEFAULT '',
   `phone` int(10) DEFAULT NULL,
+  `NIC` varchar(12) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `number_plate` (`number_plate`)
@@ -133,8 +134,8 @@ CREATE TABLE IF NOT EXISTS `user_account` (
 -- Dumping data for table `user_account`
 --
 
-INSERT INTO `user_account` (`user_id`, `name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`) VALUES
-('1', 'admin', 'admin@gmail.com', 1, '81dc9bdb52d04dc20036dbd8313ed055', 1, NULL, NULL, NULL);
+INSERT INTO `user_account` (`user_id`, `name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`, `NIC`) VALUES
+('1', 'admin', 'admin@gmail.com', 1, '81dc9bdb52d04dc20036dbd8313ed055', 1, NULL, NULL, NULL, '');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

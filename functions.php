@@ -112,4 +112,3 @@ function display_error()
 		echo '</div>';
 	}
 }
-?>

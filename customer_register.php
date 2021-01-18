@@ -34,30 +34,33 @@
                             <form class="user" method="post" action="">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" required>
+                                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" maxlength="20" pattern="[A-Za-z]{1,20}" title="Please enter alphanumeric characters only" required>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" required>
+                                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" maxlength="20" pattern="[A-Za-z]{1,20}" title="Please enter alphanumeric characters only" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control" name="VehicleNumberPlate" placeholder="Vehicle Number Plate" maxlength="10" required>
+                                        <input type="text" class="form-control" name="VehicleNumberPlate" placeholder="Vehicle Number Plate" minlength="6" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <select name="VehicleTypes" id="VehicleTypes" class="form-control" required>
                                             <option value="Car">Car</option>
+                                            <option value="SUV">SUV</option>
                                             <option value="Van">Van</option>
                                             <option value="Jeep">Jeep</option>
                                             <option value="Truck">Truck</option>
-                                            <option value="Motorbike">Motorbike</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="PhoneNumber" placeholder="Phone Number" maxlength="10" required>
+                                    <input type="text" class="form-control" name="PhoneNumber" placeholder="Phone Number" minlength="10" maxlength="10" pattern="[0-9]{10}" title="Please enter valid mobile number" required>
                                 </div>
                                 <div class="form-group">
+                                    <input type="text" class="form-control" name="NIC" placeholder="NIC Number" minlength="10" maxlength="12" pattern="[0-9]{12}|[0-9]{9}[V,Xv,x]{1}" title="Please enter valid NIC" required>
+                                </div>
+                                <div class=" form-group">
                                     <input type="email" class="form-control" name="Email" placeholder="Email Address" required>
                                 </div>
                                 <div class="form-group row">
@@ -83,6 +86,7 @@
                                 $VehicleNumberPlate = $_POST['VehicleNumberPlate'];
                                 $VehicleTypes = $_POST['VehicleTypes'];
                                 $PhoneNumber = $_POST['PhoneNumber'];
+                                $NIC = $_POST['NIC'];
                                 $Email = $_POST['Email'];
                                 $password1 = $_POST['Password'];
                                 $password2 = $_POST['RepeatPassword'];
@@ -104,7 +108,7 @@
                                     echo "The two passwords do not match";
                                 } else {
                                     $password = md5($password1);
-                                    $qry = "INSERT INTO `user_account`(`user_id`,`name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`) VALUES ('$user_id','$name','$Email','$type','$password','$active','$VehicleNumberPlate','$VehicleTypes','$PhoneNumber')";
+                                    $qry = "INSERT INTO `user_account`(`user_id`,`name`, `email`, `user_type`, `password`, `activated`, `number_plate`, `vehicle_type`, `phone`, `NIC`) VALUES ('$user_id','$name','$Email','$type','$password','$active','$VehicleNumberPlate','$VehicleTypes','$PhoneNumber','$NIC')";
                                     $qry1 = "INSERT INTO `smart_wallet`(`date`, `email`, `price`) VALUES ('$date', '$Email', '1000')";
 
                                     mysqli_query($con, $qry);
@@ -158,6 +162,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </body>
 

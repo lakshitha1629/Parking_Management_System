@@ -118,7 +118,7 @@ void loop()
     }
     else
     {
-        status_val = "Inactive";
+        // status_val = "Inactive";
         servo1.write(90);
         digitalWrite(ledPin2, HIGH); // Order the LED on Pin2 to light up Green
         digitalWrite(ledPin3, LOW);  // Order the LED on Pin3 to go off Red
@@ -148,18 +148,14 @@ void loop()
     Serial.print("Returned data from Server : ");
     Serial.println(payloadGet); //--> Print request response payload
 
-    if (payloadGet == "Reserved1" || payloadGet == "Inactive1")
-    {
-        Serial.println("--> Open Slot Gate");
-        servo1.write(90);
-    }
-
-    if (payloadGet == "Reserved1" || payloadGet == "Reserved0")
+    if (payloadGet == "Reserved0")
     {
         digitalWrite(ledPin4, HIGH); //--> Turn off Led
     }
-    else
+    else if (payloadGet == "Reserved1" || payloadGet == "Inactive1")
     {
+        Serial.println("--> Open Slot Gate");
+        servo1.write(90);
         digitalWrite(ledPin4, LOW); //--> Turn off Led
     }
     //----------------------------------------
