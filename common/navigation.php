@@ -11,7 +11,7 @@
       <div class="sidebar-brand-icon">
         <i class="fas fa-parking"></i>
       </div>
-      <div class="sidebar-brand-text mx-3">PMS</div>
+      <div class="sidebar-brand-text mx-3">Mypark-bot</div>
     </a>
     <hr class="sidebar-divider">
     <!-- Nav Item  -->

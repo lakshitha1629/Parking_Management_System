@@ -1,8 +1,12 @@
+<?php
+@ob_start();
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Parking Management System</title>
+    <title>Mypark-Bot</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
@@ -60,8 +64,6 @@
                         <input class="login100-form-btn" id="but_submit" name="login_btn" type="submit" value="Login" />
 
                         <?php
-                        session_start();
-
                         require_once('connect.php');
 
                         // call the login() function if register_btn is clicked
