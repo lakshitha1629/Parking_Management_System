@@ -35,14 +35,85 @@
                                         <p class="mb-4">We get it, stuff happens. Just enter your email address below
                                             and we'll send you a link to reset your password!</p>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post" action="">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                            <input type="email" class="form-control form-control-user" name="Email" placeholder="Email Address" required>
                                         </div>
-                                        <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                            Reset Password
-                                        </a>
-                                    </form>
+                                        <input class="btn btn-primary btn-user btn-block" name="fro_btn" type="submit" value="Reset Password" />
+
+                                    </form><br>
+
+                                    <?php
+                                    require_once('connect.php');
+
+                                    use PHPMailer\PHPMailer\PHPMailer;
+                                    use PHPMailer\PHPMailer\SMTP;
+                                    use PHPMailer\PHPMailer\Exception;
+
+                                    require_once __DIR__ . '/vendor/phpmailer/src/Exception.php';
+                                    require_once __DIR__ . '/vendor/phpmailer/src/PHPMailer.php';
+                                    require_once __DIR__ . '/vendor/phpmailer/src/SMTP.php';
+
+                                    if (isset($_POST['fro_btn'])) {
+
+                                        $RandomNumber = rand(100, 100000);
+                                        $Email = $_POST['Email'];
+
+
+                                        $query = "SELECT * FROM `user_account` WHERE `email`='$Email'";
+                                        $res = $con->query($query);
+
+                                        if (mysqli_num_rows($res) == 1) {
+                                            $password = md5($RandomNumber);
+
+                                            $qry = "UPDATE `user_account` SET `password`='$password' WHERE `email`='$Email'";
+
+                                            $result = mysqli_query($con, $qry)
+                                                or die('Error: ' . mysqli_error($con));
+
+                                            echo "<br><div class='form'>
+                                            Your password has been reset successfully. Please Check your email and Click here to <a href='index.php'>Login</a>
+                                            </div>";
+
+
+                                            //============================ Mail Fun ========================
+                                            $mail = new PHPMailer(true);
+
+                                            try {
+                                                $mail->isSMTP();
+                                                $mail->Host = 'smtp.gmail.com';
+                                                $mail->SMTPAuth = true;
+                                                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                                                $mail->Port = 587;
+
+                                                $mail->Username = 'myparkbotpms@gmail.com'; // YOUR gmail email
+                                                $mail->Password = 'botbotbot35'; // YOUR gmail password
+
+                                                // Sender and recipient settings
+                                                $mail->setFrom('myparkbotpms@gmail.com', 'MyPark-Bot');
+                                                $mail->addAddress($Email, '');
+                                                $mail->addReplyTo('myparkbotpms@gmail.com', 'MyPark-Bot'); // to set the reply to
+
+                                                // Setting the email content
+                                                $mail->IsHTML(true);
+                                                $mail->Subject = "MyPark-Bot - Password Reset";
+                                                $mail->Body = '<b>' . $RandomNumber . '</b> Your New Password!!';
+                                                $mail->AltBody = 'MyPark-Bot';
+
+                                                $mail->send();
+                                                // echo "Email message sent.";
+
+                                            } catch (Exception $e) {
+                                                // echo "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
+                                            }
+                                        } else {
+                                            echo "<br><div class='form'>
+                                            The email address provided is not registered. Please Click here to <a href='customer_register.php'>Create an Account!</a>
+                                            </div>";
+                                        }
+                                    }
+                                    ?>
+
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="customer_register.php">Create an Account!</a>
