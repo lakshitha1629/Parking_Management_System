@@ -9,12 +9,12 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Parking Spaces Booking Details</h1>
+        <h1 class="h3 mb-0 text-gray-800">Parking Spaces Details</h1>
     </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Parking Spaces Booking Details Table</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Parking Spaces Details Table</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -23,41 +23,38 @@
                     <?php
                     require_once('connect.php');
                     $user = $_SESSION['email'];
-                    $qry = "SELECT * FROM `booking_parking` WHERE `email`='$user'";
+                    $qry = "SELECT * FROM `parking_slots` INNER JOIN `user_account` ON `parking_slots`.`email`=`user_account`.`email`";
 
                     echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>   
                             <tr>
-                                <th>Date and Time</th>
                                 <th>Space Number</th>
-                                <th>Vehicle Entering Time</th>
                                 <th>Status</th>
-                                <th>Remark</th>
+                                <th>Vehicle Number</th>
                                 <th>Email</th>
-                                <th>Book Status</th>
+                                <th>Phone Number</th>
+                                <th>NIC</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Date and Time</th>
                                 <th>Space Number</th>
-                                <th>Vehicle Entering Time</th>
                                 <th>Status</th>
-                                <th>Remark</th>
+                                <th>Vehicle Number</th>
                                 <th>Email</th>
-                                <th>Book Status</th>
+                                <th>Phone Number</th>
+                                <th>NIC</th>
                             </tr>
                         </tfoot>';
 
                     if ($res = $con->query($qry)) {
                         while ($row = $res->fetch_assoc()) {
-                            $field0name = $row["date"];
-                            $field1name = $row["space_no"];
-                            $field2name = $row["vehicle_entering"];
-                            $field3name = $row["status"];
-                            $field4name = $row["remark"];
-                            $field5name = $row["email"];
-                            $field6name = $row["book_status"];
+                            $field0name = $row["parking_slot"];
+                            $field1name = $row["status"];
+                            $field2name = $row["number_plate"];
+                            $field3name = $row["email"];
+                            $field4name = $row["phone"];
+                            $field5name = $row["NIC"];
 
                             echo "<tr> 
                                     <td>" . $field0name . "</td> 
@@ -66,7 +63,6 @@
                                     <td>" . $field3name . "</td> 
                                     <td>" . $field4name . "</td> 
                                     <td>" . $field5name . "</td>
-                                    <td>" . $field6name . "</td>
                                 </tr>";
                         }
 

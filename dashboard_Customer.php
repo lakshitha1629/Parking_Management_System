@@ -131,7 +131,7 @@ function fill_product($con)
           </div>
           <div class="col-md-4 mb-3">
             <label>Conditions - </label><br>
-            <label style="color: red;">*Please booking before 1 hours</label>
+            <label style="color: red;">*Please booking before 2 hours</label>
           </div>
         </div>
         <div class="form-row">

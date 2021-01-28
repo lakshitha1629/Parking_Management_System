@@ -24,7 +24,7 @@
             <div class="form-row">
               <div class="col-md-4 mb-3">
                 <label>Email Address :</label>
-                <input type="text" name="name" class="form-control" placeholder="Enter the email address" maxlength="10" required>
+                <input type="text" name="name" class="form-control" placeholder="Enter the email address" maxlength="60" required>
               </div>
             </div>
             <div class="form-row">
@@ -93,7 +93,7 @@
             <div class="form-row">
               <div class="col-md-4 mb-3">
                 <label>Email Address :</label>
-                <input type="text" name="email" id="email" class="form-control" placeholder="Enter the email address" maxlength="10" required>
+                <input type="text" name="email" id="email" class="form-control" placeholder="Enter the email address" maxlength="60" required>
               </div>
             </div>
             <div class="form-row">

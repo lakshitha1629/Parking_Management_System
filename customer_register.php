@@ -34,10 +34,10 @@
                             <form class="user" method="post" action="">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" maxlength="20" pattern="[A-Za-z]{1,20}" title="Please enter alphanumeric characters only" required>
+                                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" maxlength="20" pattern="[A-Za-z]{1,20}" title="Please enter letters only" required>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" maxlength="20" pattern="[A-Za-z]{1,20}" title="Please enter alphanumeric characters only" required>
+                                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" maxlength="20" pattern="[A-Za-z]{1,20}" title="Please enter letters only" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
