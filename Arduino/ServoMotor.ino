@@ -1,9 +1,9 @@
 #include <Servo.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
-#define HOST "myparkbot.000webhostapp.com" // Enter HOST URL without "http:// " and "/" at the end of URL
-#define WIFI_SSID "Jayathilaka"            // WIFI SSID here
-#define WIFI_PASSWORD "fullmooN68"         // WIFI password here
+#define HOST "myparkbotpms.000webhostapp.com" // Enter HOST URL without "http:// " and "/" at the end of URL
+#define WIFI_SSID "Jayathilaka"               // WIFI SSID here
+#define WIFI_PASSWORD "fullmooN68"            // WIFI password here
 
 const int ProxSensorEN01 = D0;
 const int ProxSensorEN02 = D1;
@@ -54,7 +54,7 @@ void loop()
 
     String GetAddress, LinkGet, getData;
 
-    GetAddress = "http://myparkbot.000webhostapp.com/NodeMCU_Get_En_Ex.php";
+    GetAddress = "http://myparkbotpms.000webhostapp.com/NodeMCU_Get_En_Ex.php";
     LinkGet = GetAddress; //--> Make a Specify request destination
     getData = "ID=" + ent_exi;
     Serial.println("----------------Connect to Server-----------------");
